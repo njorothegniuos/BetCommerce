@@ -11,6 +11,9 @@ using static Identity.Identity.Models.AccountViewModels;
 
 namespace Presentation.Controllers
 {
+    /// <summary>
+    /// Represents the Account controller.
+    /// </summary>
     [Route("Account")]
     public  class AccountController : ControllerBase
     {
@@ -18,7 +21,8 @@ namespace Presentation.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IConfiguration _configuration;
         private readonly RabbitMQConfiguration _rabbitMQConfiguration;
-        private static IMessageQueueService<EmailRequest> _messageQueueService;
+        private static IMessageQueueService<EmailRequest>? _messageQueueService;
+
         public AccountController(UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager, IConfiguration configuration)
         {
@@ -31,6 +35,12 @@ namespace Presentation.Controllers
                               _configuration["RabbitMqQueueSettings:VirtualHost"]);
             _messageQueueService = new MessageQueueService<EmailRequest>(_configuration["RabbitMqQueueSettings:EmailRequestPath"], _rabbitMQConfiguration);
         }
+
+        /// <summary>
+        /// Create a user.
+        /// </summary>
+        /// <param name="userModel">The UserRegistrationModel.</param>
+        /// <returns>Returns ok for a successful user creation.</returns>
         [HttpPost("/register")]
         public async Task<IActionResult> Register(UserRegistrationModel userModel)
         {
@@ -59,6 +69,11 @@ namespace Presentation.Controllers
             return Ok($"User {userModel.Email} created successfully!");
         }
 
+        /// <summary>
+        /// Valids a given token and email.
+        /// </summary>
+        /// <param name="viewModel">The AccountLoginModel.</param>
+        /// <returns>Ok for a successfull login</returns>
         [HttpPost("/login")]
         public async Task<IActionResult> Login(AccountLoginModel viewModel)
         {
@@ -111,7 +126,13 @@ namespace Presentation.Controllers
             return BadRequest("Invalid login attempt.");
         }
 
-        [HttpGet]
+        /// <summary>
+        /// Valids a given token and email.
+        /// </summary>
+        /// <param name="token">The token value.</param>
+        /// <param name="email">The email value.</param>
+        /// <returns>Ok for a valid token and email.</returns>
+        [HttpGet("/confirmEmail")]
         public async Task<IActionResult> ConfirmEmail(string token, string email)
         {
             var user = await _userManager.FindByEmailAsync(email);
