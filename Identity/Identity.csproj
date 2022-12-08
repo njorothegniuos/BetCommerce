@@ -22,4 +22,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Application\Application.csproj" />
+    <ProjectReference Include="..\RabbitMQ\RabbitMQ.csproj" />
+  </ItemGroup>
+
 </Project>

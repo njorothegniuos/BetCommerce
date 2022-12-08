@@ -4,6 +4,72 @@
     "E:\\Code\\Application\\BET\\Core.Api\\Core.Api.csproj": {}
   },
   "projects": {
+    "E:\\Code\\Application\\BET\\Application\\Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\Code\\Application\\BET\\Application\\Application.csproj",
+        "projectName": "Application",
+        "projectPath": "E:\\Code\\Application\\BET\\Application\\Application.csproj",
+        "packagesPath": "C:\\Users\\snmburu\\.nuget\\packages\\",
+        "outputPath": "E:\\Code\\Application\\BET\\Application\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\snmburu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Users\\snmburu\\.nuget\\packages": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "Microsoft.AspNetCore.Http.Features": {
+              "target": "Package",
+              "version": "[2.2.0, )"
+            },
+            "NETCore.MailKit": {
+              "target": "Package",
+              "version": "[2.0.2, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
     "E:\\Code\\Application\\BET\\Core.Api\\Core.Api.csproj": {
       "version": "1.0.0",
       "restore": {
@@ -103,7 +169,14 @@
         "frameworks": {
           "net6.0": {
             "targetAlias": "net6.0",
-            "projectReferences": {}
+            "projectReferences": {
+              "E:\\Code\\Application\\BET\\Application\\Application.csproj": {
+                "projectPath": "E:\\Code\\Application\\BET\\Application\\Application.csproj"
+              },
+              "E:\\Code\\Application\\BET\\RabbitMQ\\RabbitMQ.csproj": {
+                "projectPath": "E:\\Code\\Application\\BET\\RabbitMQ\\RabbitMQ.csproj"
+              }
+            }
           }
         },
         "warningProperties": {
@@ -147,6 +220,68 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[6.0.0, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "E:\\Code\\Application\\BET\\RabbitMQ\\RabbitMQ.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "E:\\Code\\Application\\BET\\RabbitMQ\\RabbitMQ.csproj",
+        "projectName": "RabbitMQ",
+        "projectPath": "E:\\Code\\Application\\BET\\RabbitMQ\\RabbitMQ.csproj",
+        "packagesPath": "C:\\Users\\snmburu\\.nuget\\packages\\",
+        "outputPath": "E:\\Code\\Application\\BET\\RabbitMQ\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\snmburu\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Users\\snmburu\\.nuget\\packages": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0": {
+            "targetAlias": "net6.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0": {
+          "targetAlias": "net6.0",
+          "dependencies": {
+            "RabbitMQ.Client": {
+              "target": "Package",
+              "version": "[6.4.0, )"
             }
           },
           "imports": [

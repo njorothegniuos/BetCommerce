@@ -1,8 +1,12 @@
-﻿using Mapster;
+﻿using Application.Email.DTOs;
+using Mapster;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using Presentation.Identity;
 using Presentation.Identity.Models;
+using RabbitMQ.Services.Interface;
+using RabbitMQ.Utility;
 using static Identity.Identity.Models.AccountViewModels;
 
 namespace Presentation.Controllers
@@ -12,11 +16,20 @@ namespace Presentation.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IConfiguration _configuration;
+        private readonly RabbitMQConfiguration _rabbitMQConfiguration;
+        private static IMessageQueueService<EmailRequest> _messageQueueService;
         public AccountController(UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager, IConfiguration configuration)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _configuration = configuration;
+            _rabbitMQConfiguration = new RabbitMQConfiguration(_configuration["RabbitMqQueueSettings:Uri"],
+                              _configuration["RabbitMqQueueSettings:Port"], _configuration["RabbitMqQueueSettings:HostName"],
+                              _configuration["RabbitMqQueueSettings:UserName"], _configuration["RabbitMqQueueSettings:Password"],
+                              _configuration["RabbitMqQueueSettings:VirtualHost"]);
+            _messageQueueService = new MessageQueueService<EmailRequest>(_configuration["RabbitMqQueueSettings:EmailRequestPath"], _rabbitMQConfiguration);
         }
         [HttpPost("/register")]
         public async Task<IActionResult> Register(UserRegistrationModel userModel)
@@ -30,7 +43,10 @@ namespace Presentation.Controllers
                 await _userManager.AddToRoleAsync(user,
                                     "StandardUser");
                 //fire email event
-
+                var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                string? confirmationLink = Url.Action(nameof(ConfirmEmail), "Account", new { token, email = user.Email }, Request.Scheme);
+                EmailRequest emailRequest = new EmailRequest(user.Email,"Account confirmation", confirmationLink);
+                _messageQueueService.Send(emailRequest);
             }
             else
             {
@@ -93,6 +109,20 @@ namespace Presentation.Controllers
             }
 
             return BadRequest("Invalid login attempt.");
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ConfirmEmail(string token, string email)
+        {
+            var user = await _userManager.FindByEmailAsync(email);
+            if (user == null)
+                return BadRequest("Error");
+
+            var result = await _userManager.ConfirmEmailAsync(user, token);
+            if(result.Succeeded)
+                return BadRequest("Error");
+            else
+                return Ok("Success");
         }
     }
 }
