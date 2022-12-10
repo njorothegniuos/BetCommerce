@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Presentation.Identity;
 using Presentation.Identity.Models;
+using Presentation.Models.Attribute;
 using RabbitMQ.Services.Interface;
 using RabbitMQ.Utility;
 using static Identity.Identity.Models.AccountViewModels;
@@ -14,7 +15,7 @@ namespace Presentation.Controllers
     /// <summary>
     /// Represents the Account controller.
     /// </summary>
-    [Route("Account")]
+    [Route("v{version:apiVersion}/account"), SwaggerOrder("A")]
     public  class AccountController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> _userManager;

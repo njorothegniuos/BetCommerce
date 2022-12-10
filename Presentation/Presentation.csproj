@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />
+    <ProjectReference Include="..\Swagger\Swagger.csproj" />
   </ItemGroup>
 
 </Project>

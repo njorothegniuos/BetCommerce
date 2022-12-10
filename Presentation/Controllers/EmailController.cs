@@ -3,13 +3,14 @@ using Application.Email.Queries.GetEmailById;
 using Mapster;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Presentation.Models.Attribute;
 
 namespace Presentation.Controllers
 {
     /// <summary>
     /// Represents the Email controller.
     /// </summary>
-    [Route("Email")]
+    [Route("v{version:apiVersion}/email"), SwaggerOrder("D")]
     public class EmailController : ApiController
 {
         /// <summary>
