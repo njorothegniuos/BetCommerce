@@ -21,6 +21,7 @@ namespace Infrastructure
                 }));
 
             services.AddScoped<IEmailRepository, EmailRepository>();
+            services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
             return services;
         }
     }
