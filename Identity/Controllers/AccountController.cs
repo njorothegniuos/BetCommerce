@@ -5,9 +5,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Presentation.Identity;
 using Presentation.Identity.Models;
-using Presentation.Models.Attribute;
 using RabbitMQ.Services.Interface;
 using RabbitMQ.Utility;
+using Swagger.Models.Attribute;
 using static Identity.Identity.Models.AccountViewModels;
 
 namespace Presentation.Controllers
@@ -15,6 +15,7 @@ namespace Presentation.Controllers
     /// <summary>
     /// Represents the Account controller.
     /// </summary>
+    [ApiController]
     [Route("v{version:apiVersion}/account"), SwaggerOrder("A")]
     public  class AccountController : ControllerBase
     {

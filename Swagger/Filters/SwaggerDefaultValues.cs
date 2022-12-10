@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Presentation.Filters
+namespace Swagger.Filters
 {
     internal class SwaggerDefaultValues
     {

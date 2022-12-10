@@ -1,12 +1,12 @@
 using Application.Behaviors;
-using Core.Api.Middleware;
+using Core.Api.Authentication.Middleware;
 using Domain.Abstractions;
 using FluentValidation;
+using Identity;
 using Infrastructure;
 using MediatR;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
-using Presentation;
 using Serilog;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Data;
@@ -20,11 +20,11 @@ IConfiguration config = new ConfigurationBuilder()
     .AddEnvironmentVariables()
     .Build();
 
-var presentationAssembly = typeof(Presentation.AssemblyReference).Assembly;
+var identityAssembly = typeof(Identity.AssemblyReference).Assembly;
 
 builder.Services.AddControllers()
-    .AddApplicationPart(presentationAssembly);
-builder.Services.AddPresentation(config);
+    .AddApplicationPart(identityAssembly);
+builder.Services.AddIdentity(config);
 
 
 var applicationAssembly = typeof(Application.AssemblyReference).Assembly;
@@ -84,7 +84,7 @@ static async Task ApplyMigrations(IServiceProvider serviceProvider)
 {
     using var scope = serviceProvider.CreateScope();
 
-    await using var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+    await using var dbContext = scope.ServiceProvider.GetRequiredService<IdentityContext>();
 
     await dbContext.Database.MigrateAsync();
 }

@@ -1,16 +1,13 @@
 ﻿using Domain.Common;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Versioning;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Presentation.Identity;
 using Swagger.Models.Attribute;
 using Swagger.Models.Common;
 using Swagger.Models.Filters;
@@ -20,50 +17,13 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace Identity
+namespace Presentation
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddIdentity(this IServiceCollection services,
+        public static IServiceCollection AddPresentation(this IServiceCollection services,
             IConfiguration configuration)
         {
-            services.AddDbContext<IdentityContext>(options =>
-                options.EnableSensitiveDataLogging(true).UseSqlServer(configuration.GetConnectionString("AuthConnection"),
-                sqlServerOptionsAction: sqlOptions =>
-                {
-                    options.EnableSensitiveDataLogging(false);
-                    sqlOptions.MigrationsAssembly(typeof(IdentityContext).GetTypeInfo().Assembly.GetName().Name);
-                }));
-
-            services.AddIdentity<ApplicationUser, IdentityRole>(
-                  options =>
-                  {
-                      options.SignIn.RequireConfirmedPhoneNumber = false;
-                      options.SignIn.RequireConfirmedEmail = false;
-                  }
-              ).AddEntityFrameworkStores<IdentityContext>().AddDefaultTokenProviders();
-
-            services.Configure<IdentityOptions>(options =>
-            {
-                // Password settings.
-                options.Password.RequireDigit = true;
-                options.Password.RequireLowercase = true;
-                options.Password.RequireNonAlphanumeric = true;
-                options.Password.RequireUppercase = true;
-                options.Password.RequiredLength = 6;
-                options.Password.RequiredUniqueChars = 1;
-
-                // Lockout settings.
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(15);
-                options.Lockout.MaxFailedAccessAttempts = 3;
-                options.Lockout.AllowedForNewUsers = true;
-
-                // User settings.
-                options.User.AllowedUserNameCharacters =
-                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
-                options.User.RequireUniqueEmail = false;
-            });
-
             services.AddVersioning();
             services.AddSwaggerDocumentation();
             services.AddCustomOptions(configuration);
@@ -71,6 +31,7 @@ namespace Identity
             return services;
         }
     }
+
     public static class ConfigurationExtensionMethods
     {
         public static IServiceCollection AddAuthentication(this IServiceCollection services, IConfiguration configuration)
@@ -219,13 +180,13 @@ namespace Identity
         {
             get
             {
-                var identityAssembly = typeof(AssemblyReference).Assembly;
-                var identityAssemblyFile = $"{identityAssembly.GetName().Name}.xml";
+                var presentationAssembly = typeof(Presentation.AssemblyReference).Assembly;
+                var presentationDocumentationFile = $"{presentationAssembly.GetName().Name}.xml";
 
-                var identityAssemblyFilePath =
-                    Path.Combine(AppContext.BaseDirectory, identityAssemblyFile);
+                var presentationDocumentationFilePath =
+                    Path.Combine(AppContext.BaseDirectory, presentationDocumentationFile);
 
-                return identityAssemblyFilePath;
+                return presentationDocumentationFilePath;
             }
         }
         public static IServiceCollection AddCustomOptions(this IServiceCollection services, IConfiguration configuration)

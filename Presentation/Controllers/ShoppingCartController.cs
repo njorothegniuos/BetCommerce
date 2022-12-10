@@ -3,14 +3,14 @@ using Application.ShoppingCart.Queries.GetShoppingCartById;
 using Mapster;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Presentation.Models.Attribute;
+using Swagger.Models.Attribute;
 
 namespace Presentation.Controllers
 {
     /// <summary>
     /// Represents the ShoppingCart controller.
     /// </summary>
-    [Route("v{version:apiVersion}/shoppingCart"), SwaggerOrder("C")]
+    [Route("v{version:apiVersion}/shoppingCart"), SwaggerOrder("B")]
     public class ShoppingCartController : ApiController
     {
         /// <summary>

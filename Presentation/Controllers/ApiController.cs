@@ -8,7 +8,6 @@ namespace Presentation.Controllers
     /// Represents the base API controller.
     /// </summary>
     [ApiController]
-    [Route("api/[controller]")]
     public abstract class ApiController : ControllerBase
     {
         private ISender _sender;

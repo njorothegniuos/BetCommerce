@@ -1,4 +1,4 @@
-﻿namespace Presentation.Models.Attribute
+﻿namespace Swagger.Models.Attribute
 {
     /// <summary>
     /// Annotates a controller with a Swagger sorting order that is used when generating the Swagger documentation to

@@ -3,14 +3,14 @@ using Application.Product.GetProductById;
 using Mapster;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Presentation.Models.Attribute;
+using Swagger.Models.Attribute;
 
 namespace Presentation.Controllers
 {
     /// <summary>
     /// Represents the product controller.
     /// </summary>
-    [Route("v{version:apiVersion}/product"), SwaggerOrder("B")]
+    [Route("v{version:apiVersion}/product"), SwaggerOrder("A")]
     public class ProductController : ApiController
     {
         /// <summary>

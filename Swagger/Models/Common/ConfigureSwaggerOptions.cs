@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.SwaggerGen;
 
-namespace Presentation.Models.Common
+namespace Swagger.Models.Common
 {
     /// <summary>
     /// Configures the Swagger generation options.
@@ -39,8 +39,7 @@ namespace Presentation.Models.Common
                 Title = "RESTful APIs",
                 Version = description.ApiVersion.ToString(),
                 Description = "The  Microservice REST API.",
-                //Contact = new OpenApiContact() { Name = "Zeus", Email = "zeus@gods.io" }
-                //License = new OpenApiLicense() { Name = "MIT", Url = new Uri("https://opensource.org/licenses/MIT") }
+                Contact = new OpenApiContact() { Name = "Sam", Email = "sam@bet.com" }
             };
 
             if (description.IsDeprecated)

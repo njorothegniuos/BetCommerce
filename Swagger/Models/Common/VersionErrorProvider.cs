@@ -1,8 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
-using Swagger.Models.Common;
 
-namespace Presentation.Models.Common
+namespace Swagger.Models.Common
 {
     public class VersionErrorProvider : IErrorResponseProvider
     {
