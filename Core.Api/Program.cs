@@ -9,6 +9,7 @@ using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.OpenApi.Models;
+using Serilog;
 using System.Data;
 using System.Reflection;
 
@@ -63,6 +64,14 @@ builder.Services.AddScoped<IDbConnection>(
     factory => factory.GetRequiredService<ApplicationDbContext>().Database.GetDbConnection());
 
 builder.Services.AddTransient<ExceptionHandlingMiddleware>();
+builder.Host.UseSerilog((context, configuration) =>
+{
+
+    configuration
+        .MinimumLevel.Information()
+        .Enrich.FromLogContext()
+        .WriteTo.File(@"C:\Application\API\BET\Logs\" + DateTime.Now.ToString("yyyyMMdd") + @"\core.api.log", rollingInterval: RollingInterval.Hour, outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz}] [{Level:u3}] [{ClientIp}] [{RequestId}] [{RequestPath}] [{Message:lj}] [{Exception}]{NewLine}");
+});
 
 var app = builder.Build();
 

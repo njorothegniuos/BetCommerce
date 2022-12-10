@@ -9,7 +9,6 @@ namespace Presentation.Controllers
     /// <summary>
     /// Represents the product controller.
     /// </summary>
-    [Route("Product")]
     public class ProductController : ApiController
     {
         /// <summary>
@@ -21,7 +20,7 @@ namespace Presentation.Controllers
         [HttpGet("{productId:guid}")]
         [ProducesResponseType(typeof(ProductListingResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetWebinar(Guid productId, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetProduct(Guid productId, CancellationToken cancellationToken)
         {
             var query = new GetProductByIdQuery(productId);
 
@@ -36,7 +35,7 @@ namespace Presentation.Controllers
         /// <param name="request">The create product request.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The identifier of the newly created product.</returns>
-        [HttpPost("/create")]
+        [HttpPost("/createxProduct")]
         [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateProduct(

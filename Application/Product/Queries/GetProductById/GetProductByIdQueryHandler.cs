@@ -17,18 +17,17 @@ namespace Application.Product.GetProductById
         {
             const string sql = @"SELECT * FROM ""Products"" WHERE ""Id"" = @productId";
 
-            var webinar = await _dbConnection.QueryFirstOrDefaultAsync<ProductListingResponse>(
+            var productListingResponse = await _dbConnection.QueryFirstOrDefaultAsync<ProductListingResponse>(
                 sql,
                 new { request.productId });
 
-            if (webinar is null)
+            if (productListingResponse is null)
             {
-                throw new EmailAlertNotFoundException(request.productId);
+                throw new ProductNotFoundException(request.productId);
             }
 
-            return webinar;
+            return productListingResponse;
         }
     }
-
 }
 
