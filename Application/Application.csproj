@@ -17,4 +17,9 @@
     <ProjectReference Include="..\Domain\Domain.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Role\GetRoleById\" />
+    <Folder Include="Token\Queries\" />
+  </ItemGroup>
+
 </Project>

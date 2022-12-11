@@ -20,6 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Application\Application.csproj" />
+    <ProjectReference Include="..\Core.Api\Core.Api.csproj" />
     <ProjectReference Include="..\Domain\Domain.csproj" />
     <ProjectReference Include="..\Identity\Identity.csproj" />
     <ProjectReference Include="..\Infrastructure\Infrastructure.csproj" />
