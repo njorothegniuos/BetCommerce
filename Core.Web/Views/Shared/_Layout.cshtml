@@ -1,0 +1,82 @@
+﻿@using Core.Web.Extensions
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="~/Content/images/favicon.png" type="image/x-icon">
+    <link rel="icon" href="~/images/favicon.ico" type="image/x-icon">
+
+    <meta name="theme-color" content="#ffffff">
+
+
+    <title>@DefaultSettings.Instance.ApplicationDisplayName | @ViewBag.Title</title>
+
+    <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+    <!-- Add local styles, mostly for plugins css file -->
+    @if (IsSectionDefined("Styles"))
+    {
+        @RenderSection("Styles", required: false)
+    }
+
+    <!-- Add jQuery Style direct - used for jQGrid plugin -->
+    <link href="~/Scripts/plugins/jquery-ui/jquery-ui.min.css" rel="stylesheet" />
+
+    <!-- Primary Inspinia style -->
+    @*@Styles.Render("~/Content/css")
+        @Styles.Render("~/font-awesome/css")*@
+    <link rel="stylesheet" href="~/Content/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/Content/animate.css" />
+    <link rel="stylesheet" href="~/Content/style.css" />
+
+    @*~/Scripts/plugins/jquery-ui/jquery-ui.min.css*@
+    <link rel="stylesheet" href="~/Scripts/plugins/jquery-ui/jquery-ui.min.css" />
+
+    @*// Font Awesome icons*@
+    <link rel="stylesheet" href="~/fonts/font-awesome/css/font-awesome.min.css" />
+</head>
+<body class="body.skin-2" style="background-image:url(~/wwwroot/img/BET.jfif);">
+
+    <!-- Skin configuration box -->
+    <!--  @await Html.PartialAsync("_SkinConfig") -->
+    <!-- Wrapper-->
+    <!-- PageClass give you ability to specify custom style for specific view based on action -->
+    <div id="wrapper" class="@Html.PageClass()">
+
+        <!-- Navigation -->
+        @await Html.PartialAsync("_Navigation")
+
+        <!-- Page wraper -->
+        <div id="page-wrapper" class="gray-bg @ViewBag.SpecialClass">
+
+            <!-- Top Navbar -->
+            @await Html.PartialAsync("_TopNavbar")
+
+            <!-- Main view  -->
+            @RenderBody()
+
+            <!-- Footer -->
+            @await Html.PartialAsync("_Footer")
+
+        </div>
+        <!-- End page wrapper-->
+        <!-- Right Sidebar -->
+        @await Html.PartialAsync("_RightSidebar")
+
+    </div>
+    <!-- End wrapper-->
+    <script src="~/Scripts/jquery-3.1.1.min.js"></script>
+    <script src="~/Scripts/plugins/jquery-ui/jquery-ui.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+    <script src="~/Scripts/plugins/slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="~/Scripts/plugins/metisMenu/metisMenu.min.js"></script>
+    <script src="~/Scripts/plugins/pace/pace.min.js"></script>
+    <script src="~/Scripts/app/inspinia.js"></script>
+    <script src="~/Scripts/app/skin.config.min.js"></script>
+    <!-- Handler for local scripts -->
+    @RenderSection("scripts", required: false)
+</body>
+</html>

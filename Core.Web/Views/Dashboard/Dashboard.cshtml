@@ -1,0 +1,193 @@
+﻿@{
+    ViewBag.Title = "Products";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                @Html.ActionLink("Dashboard", "Dashboard", "Dashboard", new { Area = "" }, null)
+            </li>
+            <li class="breadcrumb-item active">
+                <strong>@ViewBag.Title</strong>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox">
+                <div class="ibox-title">
+                    <h4>@ViewBag.Title</h4>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="sk-spinner sk-spinner-wave">
+                        <div class="sk-rect1"></div>
+                        <div class="sk-rect2"></div>
+                        <div class="sk-rect3"></div>
+                        <div class="sk-rect4"></div>
+                        <div class="sk-rect5"></div>
+                    </div>
+                    @if (TempData["Result"] != null)
+                    {
+                        <div class="alert alert-success fade in">
+                            <button class="close" data-dismiss="alert">
+                                <i class="fa-fw fa fa-times"></i>
+                            </button>
+                            @TempData["Result"]
+                        </div>
+                    }
+
+                    @if (TempData["Error"] != null)
+                    {
+                        <div class="alert alert-danger fade in">
+                            <button class="close" data-dismiss="alert">
+                                <i class="fa-fw fa fa-times"></i>
+                            </button>
+                            @TempData["Error"]
+                        </div>
+                    }
+                    <div class="table-responsive">
+                        <table id="productGrid" class="table table-striped table-bordered table-hover" width="100%">
+                            <tbody>
+                                <tr>
+                                    <td colspan="7" class="dataTables_empty">
+                                        Loading data from server
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="CustomerDetails" role="dialog">
+        <div class="modal-dialog" style="width:80%">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">
+                        &times;
+                    </button>
+                    <h4 class="modal-title">
+                        Product Details
+                    </h4>
+                </div>
+                <div class="modal-body">
+                    <span id="test"></span>
+                    <div id="detailsDiv">
+
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">
+                        Close
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Styles {
+    <link rel="stylesheet" href="~/Content/plugins/dataTables/datatables.min.css" />
+    <link rel="stylesheet" href="~/Content/plugins/sweetalert/sweetalert.css" />
+
+
+}
+
+@section Scripts {
+    <script src="~/Scripts/plugins/dataTables/datatables.min.js"></script>
+    <script src="~/Scripts/plugins/sweetalert/sweetalert.min.js"></script>
+
+
+    <script type="text/javascript">
+
+        function LoadProductDetails(id) {
+            $.ajax({
+                url: '@Url.Action("ProductDetails", "Dashboard", new {Area = "" })',
+                data: {
+                    id: id
+                },
+                dataType: "html",
+                type: "GET",
+                success: function(data) {
+
+                    $("#detailsDiv").html(data);
+                    $("#CustomerDetails").modal('show');
+                }
+            });
+        }
+
+        $(document).ready(function() {
+
+            var grid = $('#productGrid').dataTable({
+                "sPaginationType": "full_numbers",
+                "bProcessing": true,
+                "bServerSide": true,
+                "responsive": true,
+                //"bJQueryUI": true,
+                "sAjaxSource": "@Url.Action("Dashboard", "Dashboard", new {Area = "" })",
+                "sServerMethod": "POST",
+                "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                    var recordStatus = aData.recordStatus;
+                    var viewUrl = '';
+
+
+                    viewUrl = '<a class="btn btn-default btn-xs" data-toggle="modal" data-target="#myModal" onclick="LoadProductDetails(\'' + aData.id + '\')" href="#">' + 'View</a>';
+                    
+                    $('td:eq(3)', nRow).html(viewUrl);
+
+                    return nRow;
+                },
+                "iDisplayLength": 10,
+                "aoColumns": [
+                    { "mDataProp": "image", "sTitle": "Image", "bSortable": false },
+                    { "mDataProp": "name", "sTitle": "Name", "bSortable": false },
+                    { "mDataProp": "price", "sTitle": "Price", "bSortable": false },
+                    { "mDataProp": "id", "sTitle": "Action", "bSortable": false }
+                ],
+                "aaSorting": [[0, 'desc']],
+                "lengthMenu": [[10], [10]]
+            });
+
+            $("#Grid_filter input").unbind();
+
+            $("#Grid_filter input").keyup(function (e) {
+
+                var value = this.value;
+
+                if (value.length >= 3) {
+
+                    $("#productGrid").dataTable().fnFilter(this.value);
+                }
+            });
+        });
+
+        $(document).ajaxStart(function() {
+            $('.ibox').children('.ibox-content').toggleClass('sk-loading');
+        });
+
+        $(document).ajaxStop(function() {
+            $('.ibox').children('.ibox-content').toggleClass('sk-loading');
+        });
+    </script>
+}

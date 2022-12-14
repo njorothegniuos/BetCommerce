@@ -1,0 +1,46 @@
+﻿@using Core.Web.Extensions
+
+@{
+    byte overrideIPRS = 0;
+}
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav metismenu" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element">
+                    <span>
+                        <a href="/"><img alt="BET" style="width: 150px;" src="~/Content/images/BET.jfif" /></a>
+                    </span>
+                    <a data-toggle="" class="" href="#">
+                        <span class="clear">
+                            <span class="block m-t-xs">
+                                @*<strong class="font-bold">@Html.ActionLink((!string.IsNullOrWhiteSpace(User.Identity.GetUserFullName()) == true ? User.Identity.GetUserFullName() : User.Identity.Name + "!"), "userprofile", "account", routeValues: null, htmlAttributes: new { title = "User Profile" })</strong>*@
+
+                            </span> <span class="text-muted text-xs block">
+                                @{var a = "John Doe";
+                        @a; }<b class="caret"></b>
+                               
+                            </span>
+                        </span>
+                    </a>
+                </div>
+                <div class="logo-element">
+                    <img alt="BET" style="width: 20px;" src="~/Content/images/Bet_logo.png" />
+                </div>
+            </li>
+
+            <li class="@Html.IsSelected(controller: "Dashboard")">
+                <a href="@Url.Action("Dashboard", "Dashboard", new { Area = "" })"><i class="fa fa-bar-chart"></i> <span class="nav-label" data-i18n="nav.metrics">Dashboard</span> </a>
+            </li>
+
+            
+            <li>
+
+                <a class="waves-effect" href="@Url.Action("Logout", "Account", new {Area = "Authentication"})">
+                    <i class="fa fa-sign-out m-r-10 text-danger"></i><span> Logout</span>
+                </a>
+            </li>
+
+        </ul>
+    </div>
+</nav>
