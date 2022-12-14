@@ -5,7 +5,7 @@ namespace Domain.Entities.ClientModule
     public class Client : Entity
     {
         public Client(Guid id, string name, string secret, Roles role, int accessTokenLifetimeInMins, int authorizationCodeLifetimeInMins,
-            bool isActive, string description, string contactEmail, string createdBy, string modifiedBy,
+            bool isActive, string description, string contactEmail, string createdBy, string? modifiedBy,
             RecordStatus recordStatus) : base(id)
         {
             Name = name;
@@ -33,7 +33,7 @@ namespace Domain.Entities.ClientModule
         public string Description { get; set; } = string.Empty;
         public string ContactEmail { get; set; } = string.Empty;
         public string CreatedBy { get; set; } = string.Empty;
-        public string ModifiedBy { get; set; } = string.Empty;
+        public string? ModifiedBy { get; set; } = string.Empty;
         public RecordStatus RecordStatus { get; set; }
         public DateTime? AuthorizationDate { get; set; }
         public DateTime CreatedAt { get; set; } = DateTime.Now;

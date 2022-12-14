@@ -7,8 +7,6 @@ namespace Application.Token.Commands.CreateToken
         public CreateTokenCommandValidator()
         {
             RuleFor(x => x.Id).NotEmpty();
-
-            RuleFor(x => x.Role).NotEmpty();
         }
     }
 }

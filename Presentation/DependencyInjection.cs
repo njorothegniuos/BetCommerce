@@ -24,10 +24,11 @@ namespace Presentation
         public static IServiceCollection AddPresentation(this IServiceCollection services,
             IConfiguration configuration)
         {
+            services.AddCustomControllers();
             services.AddVersioning();
             services.AddSwaggerDocumentation();
             services.AddCustomOptions(configuration);
-
+            services.AddAuthentication(configuration);
             return services;
         }
     }
@@ -67,7 +68,6 @@ namespace Presentation
                 options.AddPolicy(nameof(AuthPolicy.GlobalRights), policy => policy.RequireRole(nameof(Roles.Root), nameof(Roles.Admin), nameof(Roles.Webapi), nameof(Roles.Regular)));
                 options.AddPolicy(nameof(AuthPolicy.ElevatedRights), policy => policy.RequireRole(nameof(Roles.Root), nameof(Roles.Admin)));
             });
-
             return services;
         }
 

@@ -2,5 +2,5 @@
 
 namespace Application.Client.Queries.AuthenticateClient
 {
-    public sealed record AuthenticateClientQuery(Guid apiKey) : IQuery<AuthenticatedClientResponse>;
+    public sealed record AuthenticateClientQuery(Guid apiKey, string Secret) : IQuery<AuthenticatedClientResponse>;
 }

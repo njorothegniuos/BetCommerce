@@ -15,7 +15,7 @@ namespace Application.Client.Queries.AuthenticateClient
             AuthenticateClientQuery request,
             CancellationToken cancellationToken)
         {
-            const string sql = @"SELECT Id,Role FROM ""Clients"" WHERE ""Id"" = @apiKey";
+            const string sql = @"SELECT Id,Role FROM ""Clients"" WHERE ""Id"" = @apiKey and RecordStatus=2";
 
             var client = await _dbConnection.QueryFirstOrDefaultAsync<AuthenticatedClientResponse>(
                 sql,

@@ -10,7 +10,7 @@ namespace Presentation.Controllers
     /// <summary>
     /// Represents the Email controller.
     /// </summary>
-    [Route("v{version:apiVersion}/email"), SwaggerOrder("C")]
+    [Route("v{version:apiVersion}/email"), SwaggerOrder("D")]
     public class EmailController : ApiController
 {
         /// <summary>

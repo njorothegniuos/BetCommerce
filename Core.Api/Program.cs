@@ -21,7 +21,6 @@ IConfiguration config = new ConfigurationBuilder()
     .Build();
 
 var presentationAssembly = typeof(Presentation.AssemblyReference).Assembly;
-
 builder.Services.AddControllers()
     .AddApplicationPart(presentationAssembly);
 builder.Services.AddPresentation(config);
@@ -34,9 +33,6 @@ builder.Services.AddMediatR(applicationAssembly);
 builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehavior<,>));
 
 builder.Services.AddValidatorsFromAssembly(applicationAssembly);
-
-
-
 
 builder.Services.AddInfrastructure(config);
 
@@ -71,6 +67,10 @@ app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseHttpsRedirection();
 
 app.UseRouting();
+
+app.UseCors("AllowAllOrigins");
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 

@@ -1,16 +1,19 @@
 ﻿using Application.ShoppingCart.Commands.CreateShoppingCart;
 using Application.ShoppingCart.Queries.GetShoppingCartById;
 using Mapster;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swagger.Models.Attribute;
+using Swagger.Models.Common;
 
 namespace Presentation.Controllers
 {
     /// <summary>
     /// Represents the ShoppingCart controller.
     /// </summary>
-    [Route("v{version:apiVersion}/shoppingCart"), SwaggerOrder("B")]
+    [Authorize(Policy = nameof(AuthPolicy.GlobalRights))]
+    [Route("v{version:apiVersion}/shoppingCart"), SwaggerOrder("C")]
     public class ShoppingCartController : ApiController
     {
         /// <summary>

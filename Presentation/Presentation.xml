@@ -14,6 +14,26 @@
             Gets the sender.
             </summary>
         </member>
+        <member name="T:Presentation.Controllers.AuthController">
+            <summary>
+            Represents the auth controller.
+            </summary>
+        </member>
+        <member name="M:Presentation.Controllers.AuthController.RegisterClient(Application.Client.Commands.CreateClient.CreateClientRequest,System.Threading.CancellationToken)">
+            <summary>
+            Offers ability to register api clients
+            </summary>     
+            <param name="request"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Presentation.Controllers.AuthController.CreateToken(Application.Client.Queries.AuthenticateClient.TokenRequest,System.Threading.CancellationToken)">
+            <summary>
+            Before invoking this endpoint ensure your key and secret are whitelisted. 
+            Generates a JWT Bearer access token that can be used to authorize subsequent requests.      
+            </summary>
+            <param name="request"></param>
+            <returns></returns>
+        </member>
         <member name="T:Presentation.Controllers.EmailController">
             <summary>
             Represents the Email controller.

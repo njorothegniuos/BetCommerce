@@ -72,44 +72,7 @@ namespace Identity
         }
     }
     public static class ConfigurationExtensionMethods
-    {
-        public static IServiceCollection AddAuthentication(this IServiceCollection services, IConfiguration configuration)
-        {
-            //Add Token Validation Parameters
-            TokenValidationParameters tokenParameters = new()
-            {
-                //what to validate
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
-                //set up validation data
-                ValidIssuer = configuration["Security:Issuer"],
-                ValidAudience = configuration["Security:Audience"],
-                IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(configuration["Security:Key"])),
-                ClockSkew = new TimeSpan(0)//The validation parameters have a default clock skew of 5 minutes so i have to invalidate it to 0
-            };
-
-            //Add JWT Authentication
-            services.AddAuthentication(options =>
-            {
-                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            })
-            .AddJwtBearer(options =>
-            {
-                options.TokenValidationParameters = tokenParameters;
-            });
-
-            services.AddAuthorization(options =>
-            {
-                options.AddPolicy(nameof(AuthPolicy.GlobalRights), policy => policy.RequireRole(nameof(Roles.Root), nameof(Roles.Admin), nameof(Roles.Webapi), nameof(Roles.Regular)));
-                options.AddPolicy(nameof(AuthPolicy.ElevatedRights), policy => policy.RequireRole(nameof(Roles.Root), nameof(Roles.Admin)));
-            });
-
-            return services;
-        }
-
+    {       
         public static IServiceCollection AddVersioning(this IServiceCollection services)
         {
             //REF https://dev.to/99darshan/restful-web-api-versioning-with-asp-net-core-1e8g

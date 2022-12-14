@@ -34,4 +34,13 @@ namespace Domain.Common
         [Description("Disabled")]
         DisAbled = 10,
     }
+    public enum ServiceOrigin
+    {
+        [Description("Web MVC")]
+        WebMVC = 1,
+        [Description("Web API")]
+        WebAPI = 2,
+        [Description("Windows Service")]
+        WindowsService = 3
+    }
 }

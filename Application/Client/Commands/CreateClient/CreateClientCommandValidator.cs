@@ -8,7 +8,8 @@ namespace Application.Client.Commands.CreateClient
         {
             RuleFor(x => x.Name).NotEmpty();
 
-            RuleFor(x => x.Secret).NotEmpty();
+            RuleFor(x => x.ContactEmail).NotEmpty();
+            RuleFor(x => x.Description).NotEmpty();
         }
     }
 }

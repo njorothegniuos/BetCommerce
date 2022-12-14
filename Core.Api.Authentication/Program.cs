@@ -64,7 +64,7 @@ await ApplyMigrations(app.Services);
 if (app.Environment.IsDevelopment())
 {
 }
-var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+var provider = app.Services.GetRequiredService<Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider>();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
@@ -91,7 +91,7 @@ static async Task ApplyMigrations(IServiceProvider serviceProvider)
 
 public static class ConfigurationExtensionMethods
 {
-    public static IApplicationBuilder UseSwaggerDocumentation(this IApplicationBuilder app, IApiVersionDescriptionProvider provider)
+    public static IApplicationBuilder UseSwaggerDocumentation(this IApplicationBuilder app, Microsoft.AspNetCore.Mvc.ApiExplorer.IApiVersionDescriptionProvider provider)
     {
         // Enable middleware to serve generated Swagger as a JSON endpoint.            
         app.UseSwagger();
