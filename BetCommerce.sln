@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 17.0.31903.59
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{A6F162B4-8C8E-4E3C-8A88-125AD9E42CDA}"
+	ProjectSection(SolutionItems) = preProject
+		..\samuel-technical-test\README.md = ..\samuel-technical-test\README.md
+	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "core", "core", "{AE252C46-D2BE-4BB5-9505-CB9333C99146}"
 EndProject
@@ -33,15 +36,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailService", "EmailServic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "EmailWorker", "EmailWorker\EmailWorker.csproj", "{9E1BD1B9-1BB9-43C5-80D3-A622D7F32E1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Swagger", "Swagger\Swagger.csproj", "{E8D088FF-C8A6-4701-B291-3C34A726F497}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Swagger", "Swagger\Swagger.csproj", "{E8D088FF-C8A6-4701-B291-3C34A726F497}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Api.Authentication", "Core.Api.Authentication\Core.Api.Authentication.csproj", "{71C8EEB9-8F53-4EA9-8D3C-E92AD9CD0138}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Api.Authentication", "Core.Api.Authentication\Core.Api.Authentication.csproj", "{71C8EEB9-8F53-4EA9-8D3C-E92AD9CD0138}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Core.Web", "Core.Web\Core.Web.csproj", "{F9A49634-5ED8-47AE-9093-776616E0706F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Core.Web", "Core.Web\Core.Web.csproj", "{F9A49634-5ED8-47AE-9093-776616E0706F}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{10CE4F62-199F-4F8A-B93B-8977C3638AD6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Architecture.Tests", "Architecture.Tests\Architecture.Tests.csproj", "{1A45CA06-A835-4AE7-8E8F-38F708508165}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Architecture.Tests", "Architecture.Tests\Architecture.Tests.csproj", "{1A45CA06-A835-4AE7-8E8F-38F708508165}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Asp.NetCore RIA", "Asp.NetCore RIA", "{9D9D642A-8CD6-4FAD-A69B-0EFA228B0F90}"
 EndProject
