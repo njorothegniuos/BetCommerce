@@ -15,7 +15,6 @@
         </ol>
     </div>
     <div class="col-lg-2">
-
     </div>
 </div>
 
@@ -24,7 +23,7 @@
         <div class="col-lg-12">
             <div class="ibox">
                 <div class="ibox-title">
-                   
+
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -92,7 +91,6 @@
                 <div class="modal-body">
                     <span id="test"></span>
                     <div id="detailsDiv">
-
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -112,7 +110,7 @@
 
 }
 
-@section Scripts {
+    @section Scripts {
     <script src="~/Scripts/plugins/dataTables/datatables.min.js"></script>
     <script src="~/Scripts/plugins/sweetalert/sweetalert.min.js"></script>
 
@@ -127,7 +125,7 @@
                 },
                 dataType: "html",
                 type: "GET",
-                success: function(data) {
+                success: function (data) {
 
                     $("#detailsDiv").html(data);
                     $("#CustomerDetails").modal('show');
@@ -135,7 +133,7 @@
             });
         }
 
-        $(document).ready(function() {
+        $(document).ready(function () {
 
             var grid = $('#productGrid').dataTable({
                 "sPaginationType": "full_numbers",
@@ -145,7 +143,7 @@
                 //"bJQueryUI": true,
                 "sAjaxSource": "@Url.Action("Dashboard", "Dashboard", new {Area = "" })",
                 "sServerMethod": "POST",
-                "fnRowCallback": function(nRow, aData, iDisplayIndex, iDisplayIndexFull) {
+                "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
                     var recordStatus = aData.recordStatus;
                     var viewUrl = '';
 
@@ -180,11 +178,11 @@
             });
         });
 
-        $(document).ajaxStart(function() {
+        $(document).ajaxStart(function () {
             $('.ibox').children('.ibox-content').toggleClass('sk-loading');
         });
 
-        $(document).ajaxStop(function() {
+        $(document).ajaxStop(function () {
             $('.ibox').children('.ibox-content').toggleClass('sk-loading');
         });
     </script>
