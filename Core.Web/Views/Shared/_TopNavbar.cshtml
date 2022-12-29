@@ -1,0 +1,80 @@
+﻿<div class="topbar">
+    <div class="navbar navbar-default" role="navigation">
+        <div class="container">
+            <div class="">
+                <div class="pull-left">
+                    <button class="button-menu-mobile open-left waves-effect waves-light">
+                        <i class="fa fa-navicon"></i>
+                    </button>
+                    <span class="clearfix"></span>
+                </div>
+               
+                    <ul class="nav navbar-nav hidden-xs">
+                        <li><a href="#" class="waves-effect waves-light">BET | @ViewBag.Title</a></li>
+                    </ul>
+             
+                <div class="navbar-header pull-right">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#rightNav">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+
+                <div class="collapse navbar-collapse" id="rightNav">
+                    <ul class="nav navbar-nav navbar-right pull-right">
+
+                        <li class="hidden-xs">
+                            <a href="#" id="btn-fullscreen" class="waves-effect waves-light"><i class="glyphicon glyphicon-fullscreen"></i></a>
+                        </li>
+                       
+                            <li class="dropdown top-menu-item-xs">
+                                <a href="" class="dropdown-toggle profile waves-effect waves-light" data-toggle="dropdown" aria-expanded="false">
+                                    <span id="current_user_id" style="display:none;">
+                                      
+                                            <strong class="font-bold"> TEST</strong>
+                                        
+                                    </span>
+                                    <i class="fa fa-user text-pink"></i>
+                                    <span></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="@Url.Action("Profile", "Manage", new {Area = ""})">
+                                            <i class="fa fa-user m-r-10 text-custom"></i> Profile
+
+                                        </a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a href="@Url.Action("Login", "Account", new {Area = ""})">
+                                            <i class="fa fa-sign-out m-r-10 text-danger"></i> Log out
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        
+                        <li class="dropdown top-menu-item-xs">
+                            <a href="javascript:void(0)" class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="false">
+                                <i class="glyphicon glyphicon-question-sign"></i>
+                                <span>Help</span><span style="margin-left:7px;" class="caret"></span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="@Url.Action("Cart", "Dashboard", new {Area = ""})">
+                                <i class="fa-shopping-cart text-success"></i> Cart
+                            </a>
+                        </li>
+                        <li class="hidden-xs">
+                            <a href="@Url.Action("Login", "Account", new {Area = ""})" class="waves-effect waves-light">
+                                <i class="fa fa-sign-out m-r-10 text-danger"></i>
+
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

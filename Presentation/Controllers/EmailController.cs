@@ -3,13 +3,14 @@ using Application.Email.Queries.GetEmailById;
 using Mapster;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Swagger.Models.Attribute;
 
 namespace Presentation.Controllers
 {
     /// <summary>
     /// Represents the Email controller.
     /// </summary>
-    [Route("Email")]
+    [Route("v{version:apiVersion}/email"), SwaggerOrder("D")]
     public class EmailController : ApiController
 {
         /// <summary>
@@ -21,7 +22,7 @@ namespace Presentation.Controllers
         [HttpGet("{emailId:guid}")]
         [ProducesResponseType(typeof(EmailResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetWebinar(Guid emailId, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetEmail(Guid emailId, CancellationToken cancellationToken)
         {
             var query = new GetEmailByIdQuery(emailId);
 
@@ -36,7 +37,7 @@ namespace Presentation.Controllers
         /// <param name="request">The create email request.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The identifier of the newly created email.</returns>
-        [HttpPost("/create")]
+        [HttpPost("/createEmail")]
         [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateEmail(

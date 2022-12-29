@@ -2,15 +2,14 @@ using Application.Behaviors;
 using Core.Api.Middleware;
 using Domain.Abstractions;
 using FluentValidation;
-using Identity;
 using Infrastructure;
-using Infrastructure.Repositories;
 using MediatR;
+using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.OpenApi.Models;
+using Presentation;
+using Serilog;
+using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Data;
-using System.Reflection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -21,17 +20,11 @@ IConfiguration config = new ConfigurationBuilder()
     .AddEnvironmentVariables()
     .Build();
 
-var identityAssembly = typeof(Identity.AssemblyReference).Assembly;
-
-builder.Services.AddControllers()
-    .AddApplicationPart(identityAssembly);
-builder.Services.AddIdentityService(config);
-builder.Services.AddTransient<IdentityContext>();
-
 var presentationAssembly = typeof(Presentation.AssemblyReference).Assembly;
-
 builder.Services.AddControllers()
     .AddApplicationPart(presentationAssembly);
+builder.Services.AddPresentation(config);
+
 
 var applicationAssembly = typeof(Application.AssemblyReference).Assembly;
 
@@ -41,19 +34,6 @@ builder.Services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBeh
 
 builder.Services.AddValidatorsFromAssembly(applicationAssembly);
 
-
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-builder.Services.AddSwaggerGen(c =>
-{
-    var presentationDocumentationFile = $"{presentationAssembly.GetName().Name}.xml";
-
-    var presentationDocumentationFilePath =
-        Path.Combine(AppContext.BaseDirectory, presentationDocumentationFile);
-
-    c.IncludeXmlComments(presentationDocumentationFilePath);
-
-    c.SwaggerDoc("v1", new OpenApiInfo { Title = "Core.Api", Version = "v1" });
-});
 builder.Services.AddInfrastructure(config);
 
 builder.Services.AddScoped<IUnitOfWork>(
@@ -63,6 +43,14 @@ builder.Services.AddScoped<IDbConnection>(
     factory => factory.GetRequiredService<ApplicationDbContext>().Database.GetDbConnection());
 
 builder.Services.AddTransient<ExceptionHandlingMiddleware>();
+builder.Host.UseSerilog((context, configuration) =>
+{
+
+    configuration
+        .MinimumLevel.Information()
+        .Enrich.FromLogContext()
+        .WriteTo.File(@"C:\Application\API\BET\Logs\" + DateTime.Now.ToString("yyyyMMdd") + @"\core.api.log", rollingInterval: RollingInterval.Hour, outputTemplate: "[{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz}] [{Level:u3}] [{ClientIp}] [{RequestId}] [{RequestPath}] [{Message:lj}] [{Exception}]{NewLine}");
+});
 
 var app = builder.Build();
 
@@ -71,10 +59,8 @@ await ApplyMigrations(app.Services);
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-
-    app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Web v1"));
 }
+var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 
@@ -82,7 +68,13 @@ app.UseHttpsRedirection();
 
 app.UseRouting();
 
+app.UseCors("AllowAllOrigins");
+
+app.UseAuthentication();
+
 app.UseAuthorization();
+
+app.UseSwaggerDocumentation(provider);
 
 app.UseEndpoints(endpoints => endpoints.MapControllers());
 
@@ -92,15 +84,30 @@ static async Task ApplyMigrations(IServiceProvider serviceProvider)
 {
     using var scope = serviceProvider.CreateScope();
 
-    await using var dbContext = scope.ServiceProvider.GetRequiredService<IdentityContext>();
+    await using var dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
 
     await dbContext.Database.MigrateAsync();
-    //Uncomment to seed user login data
-    //DataInitializerConfiguration dataInitializerConfiguration = new DataInitializerConfiguration(dbContext);
+}
 
-    using var _scope  = serviceProvider.CreateScope();
+public static class ConfigurationExtensionMethods
+{
+    public static IApplicationBuilder UseSwaggerDocumentation(this IApplicationBuilder app, IApiVersionDescriptionProvider provider)
+    {
+        // Enable middleware to serve generated Swagger as a JSON endpoint.            
+        app.UseSwagger();
 
-    await using var _dbContext = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
+        //Enable middleware to serve swagger - ui(HTML, JS, CSS, etc.), specifying the Swagger JSON endpoint.
+        app.UseSwaggerUI(options =>
+        {
+            //options.RoutePrefix = "";
+            // build a swagger endpoint for each discovered API version
+            foreach (ApiVersionDescription description in provider.ApiVersionDescriptions)
+            {
+                options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json", description.GroupName.ToUpperInvariant());
+            }
+            options.DocExpansion(docExpansion: DocExpansion.None);
+        });
 
-    await dbContext.Database.MigrateAsync();
+        return app;
+    }
 }

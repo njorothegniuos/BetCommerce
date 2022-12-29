@@ -7,6 +7,7 @@ using Presentation.Identity;
 using Presentation.Identity.Models;
 using RabbitMQ.Services.Interface;
 using RabbitMQ.Utility;
+using Swagger.Models.Attribute;
 using static Identity.Identity.Models.AccountViewModels;
 
 namespace Presentation.Controllers
@@ -14,7 +15,8 @@ namespace Presentation.Controllers
     /// <summary>
     /// Represents the Account controller.
     /// </summary>
-    [Route("Account")]
+    [ApiController]
+    [Route("v{version:apiVersion}/account"), SwaggerOrder("A")]
     public  class AccountController : ControllerBase
     {
         private readonly UserManager<ApplicationUser> _userManager;

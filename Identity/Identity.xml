@@ -1,1 +1,35 @@
-﻿<?xml version="1.0" encoding="utf-8" ?> 
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Identity</name>
+    </assembly>
+    <members>
+        <member name="T:Presentation.Controllers.AccountController">
+            <summary>
+            Represents the Account controller.
+            </summary>
+        </member>
+        <member name="M:Presentation.Controllers.AccountController.Register(Presentation.Identity.Models.UserRegistrationModel)">
+            <summary>
+            Create a user.
+            </summary>
+            <param name="userModel">The UserRegistrationModel.</param>
+            <returns>Returns ok for a successful user creation.</returns>
+        </member>
+        <member name="M:Presentation.Controllers.AccountController.Login(Identity.Identity.Models.AccountViewModels.AccountLoginModel)">
+            <summary>
+            Valids a given token and email.
+            </summary>
+            <param name="viewModel">The AccountLoginModel.</param>
+            <returns>Ok for a successfull login</returns>
+        </member>
+        <member name="M:Presentation.Controllers.AccountController.ConfirmEmail(System.String,System.String)">
+            <summary>
+            Valids a given token and email.
+            </summary>
+            <param name="token">The token value.</param>
+            <param name="email">The email value.</param>
+            <returns>Ok for a valid token and email.</returns>
+        </member>
+    </members>
+</doc>

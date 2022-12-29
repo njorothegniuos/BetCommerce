@@ -17,16 +17,16 @@ namespace Application.Email.Queries.GetEmailById
         {
             const string sql = @"SELECT * FROM ""EmailAlerts"" WHERE ""Id"" = @emailId";
 
-            var webinar = await _dbConnection.QueryFirstOrDefaultAsync<EmailResponse>(
+            var email = await _dbConnection.QueryFirstOrDefaultAsync<EmailResponse>(
                 sql,
                 new { request.emailId });
 
-            if (webinar is null)
+            if (email is null)
             {
                 throw new EmailAlertNotFoundException(request.emailId);
             }
 
-            return webinar;
+            return email;
         }
     }
 }

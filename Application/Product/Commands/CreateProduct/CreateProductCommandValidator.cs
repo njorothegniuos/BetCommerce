@@ -1,5 +1,4 @@
-﻿using Application.Email.Commands.CreateEmail;
-using FluentValidation;
+﻿using FluentValidation;
 
 namespace Application.Product.Commands.CreateProduct
 {
@@ -9,7 +8,6 @@ namespace Application.Product.Commands.CreateProduct
         {
             RuleFor(x => x.Name).NotEmpty();
 
-            RuleFor(x => x.Name).NotEmpty();
         }
     }
 }

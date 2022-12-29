@@ -8,6 +8,5 @@ namespace Domain.Exception
             : base($"The EmailAlert with the identifier {id} was not found.")
         {
         }
-
     }
 }

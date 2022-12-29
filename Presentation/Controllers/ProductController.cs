@@ -1,15 +1,20 @@
 ﻿using Application.Product.Commands.CreateProduct;
 using Application.Product.GetProductById;
+using Domain.Common;
 using Mapster;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Swagger.Models.Attribute;
+using Swagger.Models.Common;
 
 namespace Presentation.Controllers
 {
     /// <summary>
     /// Represents the product controller.
     /// </summary>
-    [Route("Product")]
+    [Authorize(Policy = nameof(AuthPolicy.GlobalRights))]
+    [Route("v{version:apiVersion}/product"), SwaggerOrder("B")]
     public class ProductController : ApiController
     {
         /// <summary>
@@ -21,7 +26,7 @@ namespace Presentation.Controllers
         [HttpGet("{productId:guid}")]
         [ProducesResponseType(typeof(ProductListingResponse), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
-        public async Task<IActionResult> GetWebinar(Guid productId, CancellationToken cancellationToken)
+        public async Task<IActionResult> GetProduct(Guid productId, CancellationToken cancellationToken)
         {
             var query = new GetProductByIdQuery(productId);
 
@@ -36,7 +41,7 @@ namespace Presentation.Controllers
         /// <param name="request">The create product request.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The identifier of the newly created product.</returns>
-        [HttpPost("/create")]
+        [HttpPost("/createProduct")]
         [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateProduct(
