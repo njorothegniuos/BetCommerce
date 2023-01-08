@@ -139,10 +139,11 @@ namespace Core.web.Mvc.Controllers
         {
             var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
 
+            var orderNumber = RandomString(6);
             //ToDo: make API call Refactor:use HttpRequestAppService
             //SEND EMAIL
             string subject = currentUser.UserName + " CheckOut Details";
-            var messageBody = $"You have purchased items from BET commerce.<br/> Regards, <br/> Bet Team";
+            var messageBody = $"You have purchased items from BET commerce order number {orderNumber}.<br/> Regards, <br/> Bet Team";
 
             CreateEmailRequest request = new CreateEmailRequest("info@bet.com", currentUser.Email, "support@bet.com", subject, messageBody, true, DLRStatus.Pending.ToString(), ServiceOrigin.WebMVC.ToString(), "0", "0", "0");
 
@@ -162,7 +163,6 @@ namespace Core.web.Mvc.Controllers
                 res = HttpUtility.HtmlDecode(res);
 
                 var responseData = JsonConvert.DeserializeObject<string>(res);
-
             }
 
             TempData["Success"] = "Checkout was successfully!";
@@ -291,6 +291,15 @@ namespace Core.web.Mvc.Controllers
                 return Json("Item removed from cart");
             }
             return Json("");
+        }
+
+        private static Random random = new Random();
+
+        public static string RandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
 }
