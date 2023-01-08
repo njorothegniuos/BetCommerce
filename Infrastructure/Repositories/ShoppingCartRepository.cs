@@ -10,5 +10,6 @@ namespace Infrastructure.Repositories
         public ShoppingCartRepository(ApplicationDbContext dbContext) => _dbContext = dbContext;
 
         public void Insert(ShoppingCart shoppingCart) => _dbContext.Set<ShoppingCart>().Add(shoppingCart);
+        public void Delete(ShoppingCart shoppingCart) => _dbContext.Set<ShoppingCart>().Remove(shoppingCart);
     }
 }
