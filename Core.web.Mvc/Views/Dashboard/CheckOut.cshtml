@@ -1,5 +1,5 @@
 ﻿@{
-    ViewBag.Title = "Cart";
+    ViewBag.Title = "CheckOut";
 
     Layout = "~/Views/Shared/_Layout.cshtml";
 
@@ -9,7 +9,7 @@
     <div class="col-lg-10">
         <ol class="breadcrumb">
             <li class="breadcrumb-item">
-                @Html.ActionLink("Dashboard", "Dashboard", "Dashboard", new { Area = "" }, null)
+                @Html.ActionLink("Dashboard", "Dashboard", "", new { Area = "" }, null)
             </li>
 
         </ol>
@@ -20,7 +20,7 @@
 
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
-        <div class="col-lg-6">
+        <div class="col-lg-12">
             <div class="ibox">
                 <div class="ibox-title">
 
@@ -74,18 +74,6 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-4">
-            <div class="ibox">
-                <h4 class="modal-title">
-                    CART SUMMARY
-                </h4>
-                <p>
-                    Subtotal   KSh 1,950
-                </p>
-                <br/>
-                @Html.ActionLink("CHECKOUT", "CheckOut", "Dashboard", new { Area = "" }, new { @class = "btn btn-success" })
-            </div>
-        </div>
     </div>
 
     <div class="modal" id="CustomerDetails" role="dialog">
@@ -128,53 +116,6 @@
 
 
     <script type="text/javascript">
-
-        function LoadProductDetails(id) {
-            $.ajax({
-                url: '@Url.Action("ProductDetailsssss", "Dashboard", new {Area = "" })',
-                data: {
-                    id: id
-                },
-                dataType: "html",
-                type: "GET",
-                success: function (data) {
-
-                    $("#detailsDiv").html(data);
-                    $("#CustomerDetails").modal('show');
-                }
-            });
-        }
-        function ViewItem(id) {
-            $.ajax({
-                url: '@Url.Action("CartProductDetails", "Dashboard", new {Area = "" })',
-                data: {
-                    id: id
-                },
-                dataType: "html",
-                type: "GET",
-                success: function (data) {
-
-                    $("#detailsDiv").html(data);
-                    $("#CustomerDetails").modal('show');
-                }
-            });
-        }
-        function RemoveFromCart(id) {
-            $.ajax({
-                url: '@Url.Action("CartProductDetails", "Dashboard", new {Area = "" })',
-                data: {
-                    id: id
-                },
-                dataType: "html",
-                type: "GET",
-                success: function (data) {
-
-                    $("#detailsDiv").html(data);
-                    $("#CustomerDetails").modal('show');
-                }
-            });
-        }
-
         $(document).ready(function () {
 
             var grid = $('#productGrid').dataTable({
@@ -183,14 +124,9 @@
                 "bServerSide": true,
                 "responsive": true,
                 //"bJQueryUI": true,
-                "sAjaxSource": "@Url.Action("Cart", "Dashboard", new {Area = "" })",
+                "sAjaxSource": "@Url.Action("CheckOut", "Dashboard", new {Area = "" })",
                 "sServerMethod": "POST",
                 "fnRowCallback": function (nRow, aData, iDisplayIndex, iDisplayIndexFull) {
-                    var recordStatus = aData.recordStatus;
-                    var viewUrl = '';
-                    viewUrl = '<a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal" onclick="ViewItem(\'' + aData.id + '\')" href="#">' + 'View</a>';
-                    removeFromCart = '<a class="btn btn-danger btn-xs"  onclick="RemoveFromCart_1(' + aData.id + ')">' + 'Remove</a>';
-                    $('td:eq(3)', nRow).html(viewUrl + ' ' +removeFromCart);
 
                     return nRow;
                 },
@@ -231,19 +167,3 @@
         });
     </script>
 }
-    <script type="text/javascript">
-        function RemoveFromCart_1(id) {
-            var value = id;
-            var value2 = 'id';
-            console.log("selectedValue" + value);
-            console.log("selectedValue" + value2);
-            $.ajax({
-                type: 'Post',
-                url: '/Dashboard/RemoveFromCart/',
-                data: { id: id }
-            })
-                .done(function (data) {
-                    swal("Result:", data, "success");
-                });
-        }
-    </script>

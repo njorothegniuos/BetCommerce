@@ -1,4 +1,5 @@
 using EmailService;
+using RabbitMQ.Utility;
 using Serilog;
 
 IHost host = Host.CreateDefaultBuilder(args)
@@ -14,7 +15,8 @@ IHost host = Host.CreateDefaultBuilder(args)
     {
         var builder = new ConfigurationBuilder().AddJsonFile("appsettings.json");
         var config = builder.Build();
-
+        RabbitMQConfiguration rabbitMqOptions = config.GetSection("RabbitMqQueueSettings").Get<RabbitMQConfiguration>();
+        services.AddSingleton(rabbitMqOptions);
         var emailConfig = config
                 .GetSection("EmailConfiguration")
                 .Get<EmailConfiguration>();

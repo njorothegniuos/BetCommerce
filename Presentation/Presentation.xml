@@ -55,6 +55,34 @@
             <param name="cancellationToken">The cancellation token.</param>
             <returns>The identifier of the newly created email.</returns>
         </member>
+        <member name="M:Presentation.Controllers.EmailController.PublishEmailAlert(Application.Email.Commands.CreateEmail.CreateEmailRequest)">
+            <summary>
+            publish a new email based on the specified request.
+            </summary>
+            <param name="request">The create email request.</param>
+            <returns>The identifier of the newly created order.</returns>
+        </member>
+        <member name="T:Presentation.Controllers.OrderController">
+            <summary>
+            Represents the product controller.
+            </summary>
+        </member>
+        <member name="M:Presentation.Controllers.OrderController.CreateOrder(Application.Product.Commands.CreateProduct.CreateOrderRequest,System.Threading.CancellationToken)">
+            <summary>
+            Creates a new order based on the specified request.
+            </summary>
+            <param name="request">The create order request.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The identifier of the newly order product.</returns>
+        </member>
+        <member name="M:Presentation.Controllers.OrderController.PublishOder(Application.Product.Commands.CreateProduct.CreateOrderRequest,System.Threading.CancellationToken)">
+            <summary>
+            publish a new order based on the specified request.
+            </summary>
+            <param name="request">The publish order request.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The identifier of the newly published order.</returns>
+        </member>
         <member name="T:Presentation.Controllers.ProductController">
             <summary>
             Represents the product controller.

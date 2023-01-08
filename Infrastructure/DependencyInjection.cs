@@ -26,6 +26,7 @@ namespace Infrastructure
             services.AddScoped<IClientRepository, ClientRepository>();
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<ITokenRepository, TokenRepository>();
+            services.AddScoped<IOrderRepository, OrderRepository>();
             return services;
         }
     }

@@ -26,14 +26,16 @@ namespace Core.Web.Areas.Authentication.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IMemoryCache _memoryCache;
         IConfiguration _configuration;
 
-        public AccountController( SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager,
-             IConfiguration configuration)
+        public AccountController(SignInManager<ApplicationUser> signInManager, UserManager<ApplicationUser> userManager,
+             IConfiguration configuration, IMemoryCache memoryCache)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _configuration = configuration;
+            _memoryCache = memoryCache;
         }
 
         [HttpGet]
@@ -100,7 +102,7 @@ namespace Core.Web.Areas.Authentication.Controllers
                 using (var pclient = new HttpClient())
                 {
                     var api_url = _configuration["WebApi:WebApiClientUrl"];
-                    api_url = api_url + "createEmail";
+                    api_url = api_url + "v1/email/publish";
 
                     pclient.DefaultRequestHeaders.Add("Accept", "application/json");
 
@@ -112,7 +114,7 @@ namespace Core.Web.Areas.Authentication.Controllers
                     var res = await response.Content.ReadAsStringAsync();
                     res = HttpUtility.HtmlDecode(res);
 
-                    var responseData = JsonConvert.DeserializeObject<Guid>(res);
+                    var responseData = JsonConvert.DeserializeObject<string>(res);
 
                     Serilog.Log.Information("Email request received for processing: " + responseData);
                 }
@@ -155,7 +157,14 @@ namespace Core.Web.Areas.Authentication.Controllers
             if (!ModelState.IsValid)
                 return View(viewModel);
 
-            var user = await _userManager.FindByEmailAsync(viewModel.Email);
+
+            var user = await _memoryCache.GetOrCreateAsync(key,
+                entry =>
+                {
+                    entry.SetAbsoluteExpiration(TimeSpan.FromHours(24));
+                    return _userManager.FindByEmailAsync(viewModel.Email);
+                }
+                );
 
             if (user == null)
             {

@@ -7,6 +7,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Presentation;
+using RabbitMQ.Utility;
 using Serilog;
 using Swashbuckle.AspNetCore.SwaggerUI;
 using System.Data;
@@ -19,6 +20,9 @@ IConfiguration config = new ConfigurationBuilder()
     .AddJsonFile("appsettings.json")
     .AddEnvironmentVariables()
     .Build();
+
+RabbitMQConfiguration rabbitMqOptions = config.GetSection("RabbitMqQueueSettings").Get<RabbitMQConfiguration>();
+builder.Services.AddSingleton(rabbitMqOptions);
 
 var presentationAssembly = typeof(Presentation.AssemblyReference).Assembly;
 builder.Services.AddControllers()

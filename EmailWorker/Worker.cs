@@ -4,24 +4,19 @@ namespace EmailService
 {
     public class Worker : BackgroundService
     {
-        private readonly ILogger<Worker> _logger;
         private readonly IEmailSender _emailSender;
         private readonly IConfiguration _configuration;
         private readonly IServiceProvider _serviceProvider;
         private EmailQueueProcessor _emailQueueProcessor;
         private readonly RabbitMQConfiguration _rabbitMQConfiguration;
 
-        public Worker(ILogger<Worker> logger, IConfiguration configuration, IServiceProvider serviceProvider)
+        public Worker(IConfiguration configuration, RabbitMQConfiguration rabbitMQConfiguration, IServiceProvider serviceProvider)
         {
-            _logger = logger;
             _configuration = configuration;
             _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
             IServiceScope scope = _serviceProvider.CreateScope();
             _emailSender = scope.ServiceProvider.GetRequiredService<IEmailSender>();
-            _rabbitMQConfiguration = new RabbitMQConfiguration(_configuration["RabbitMqQueueSettings:Uri"],
-                              _configuration["RabbitMqQueueSettings:Port"], _configuration["RabbitMqQueueSettings:HostName"],
-                              _configuration["RabbitMqQueueSettings:UserName"], _configuration["RabbitMqQueueSettings:Password"],
-                              _configuration["RabbitMqQueueSettings:VirtualHost"]);
+            _rabbitMQConfiguration = rabbitMQConfiguration;
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)

@@ -24,12 +24,12 @@ namespace RabbitMQ.Services.Interface
             _connectionFactory = new ConnectionFactory
 
             {
-                HostName = rabbitMQConfiguration._hostName,
-                Port = Convert.ToInt32(rabbitMQConfiguration._port),
-                UserName = rabbitMQConfiguration._userName,
-                Password = rabbitMQConfiguration._password,
-                VirtualHost = rabbitMQConfiguration._virtualHost,
-                Uri = new Uri(rabbitMQConfiguration._Uri),
+                HostName = rabbitMQConfiguration.HostName,
+                Port = Convert.ToInt32(rabbitMQConfiguration.Port),
+                UserName = rabbitMQConfiguration.UserName,
+                Password = rabbitMQConfiguration.Password,
+                VirtualHost = rabbitMQConfiguration.VirtualHost,
+                Uri = new Uri(rabbitMQConfiguration.Uri),
                 DispatchConsumersAsync = true
 
             };
