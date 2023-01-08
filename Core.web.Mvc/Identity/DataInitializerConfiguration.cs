@@ -17,9 +17,10 @@ namespace Core.web.Mvc.Identity
             if (userManager.FindByNameAsync("sam").Result == null)
             {
                 ApplicationUser user = new ApplicationUser();
-                user.UserName = "sam";
-                user.Email = "info@bet.com";
-                user.EmailConfirmed = false;
+                user.UserName = "Sam@bet.com".ToUpper();
+                user.Email = "Sam@bet.com".ToUpper();
+                user.NormalizedEmail = "Sam@bet.com".ToUpper();
+                user.EmailConfirmed = true;
                 user.PhoneNumberConfirmed = false;
                 user.CreatedDate = DateTime.Now;
                 user.RecordStatus = (byte)RecordStatus.Approved;
@@ -50,9 +51,10 @@ namespace Core.web.Mvc.Identity
             if (userManager.FindByNameAsync("su").Result == null)
             {
                 ApplicationUser user = new ApplicationUser();
-                user.UserName = "su";
-                user.Email = "info@bet.com";
-                user.EmailConfirmed = false;
+                user.UserName = "Sami@bet.com".ToUpper();
+                user.Email = "Sami@bet.com".ToUpper();
+                user.NormalizedEmail = "Sami@bet.com".ToUpper();
+                user.EmailConfirmed = true;
                 user.PhoneNumberConfirmed = false;
                 user.CreatedDate = DateTime.Now;
                 user.RecordStatus = (byte)RecordStatus.Approved;
@@ -61,7 +63,7 @@ namespace Core.web.Mvc.Identity
                 user.LastPasswordChangedDate = DateTime.Now;
                 user.PhoneNumber = "254707318620";
                 user.PhoneNumberConfirmed = true;
-                user.FirstName = "Sam";
+                user.FirstName = "Sami";
                 user.OtherNames = "Mburu";
                 user.LastLoginDateTime = DateTime.Now;
                 user.ApprovedDate = DateTime.Now;

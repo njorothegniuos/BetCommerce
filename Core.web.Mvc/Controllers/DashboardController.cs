@@ -1,6 +1,7 @@
 ﻿using Core.web.Mvc.DTOs.Response;
 using Core.web.Mvc.Identity;
 using Core.web.Mvc.Models;
+using Core.web.Mvc.Utils;
 using Core.Web.DTOs.Request;
 using Core.Web.DTOs.Response;
 using Core.Web.Extensions;
@@ -128,6 +129,46 @@ namespace Core.web.Mvc.Controllers
             }
             return this.DataTablesJson(new List<ProductDTO>(), totalRecordCount, jQueryDataTablesModel.iDisplayLength, jQueryDataTablesModel.sEcho);
         }
+        public IActionResult CheckOut()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CheckOut(JQueryDataTablesModel jQueryDataTablesModel)
+        {
+            var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
+
+            var orderNumber = RandomString(6);
+            //ToDo: make API call Refactor:use HttpRequestAppService
+            //SEND EMAIL
+            string subject = currentUser.UserName + " CheckOut Details";
+            var messageBody = $"You have purchased items from BET commerce order number {orderNumber}.<br/> Regards, <br/> Bet Team";
+
+            CreateEmailRequest request = new CreateEmailRequest("info@bet.com", currentUser.Email, "support@bet.com", subject, messageBody, true, DLRStatus.Pending.ToString(), ServiceOrigin.WebMVC.ToString(), "0", "0", "0");
+
+            using (var pclient = new HttpClient())
+            {
+                var api_url = _configuration["WebApi:WebApiClientUrl"];
+                api_url = api_url + "v1/email/publish";
+
+                pclient.DefaultRequestHeaders.Add("Accept", "application/json");
+
+                var data = JsonConvert.SerializeObject(request);
+                var content = new StringContent(data, Encoding.UTF8, "application/json"); ;
+
+                var response = await pclient.PostAsync(api_url, content);
+
+                var res = await response.Content.ReadAsStringAsync();
+                res = HttpUtility.HtmlDecode(res);
+
+                var responseData = JsonConvert.DeserializeObject<string>(res);
+            }
+
+            TempData["Success"] = "Checkout was successfully!";
+
+            return View();
+        }
 
         [HttpGet]
         public async Task<IActionResult> ProductDetails(Guid id)
@@ -250,6 +291,15 @@ namespace Core.web.Mvc.Controllers
                 return Json("Item removed from cart");
             }
             return Json("");
+        }
+
+        private static Random random = new Random();
+
+        public static string RandomString(int length)
+        {
+            const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            return new string(Enumerable.Repeat(chars, length)
+                .Select(s => s[random.Next(s.Length)]).ToArray());
         }
     }
 }

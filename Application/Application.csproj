@@ -20,6 +20,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Order\Queries\" />
     <Folder Include="Role\GetRoleById\" />
     <Folder Include="Token\Queries\" />
   </ItemGroup>

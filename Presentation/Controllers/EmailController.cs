@@ -3,6 +3,8 @@ using Application.Email.Queries.GetEmailById;
 using Mapster;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using RabbitMQ.Services.Interface;
+using RabbitMQ.Utility;
 using Swagger.Models.Attribute;
 
 namespace Presentation.Controllers
@@ -13,6 +15,13 @@ namespace Presentation.Controllers
     [Route("v{version:apiVersion}/email"), SwaggerOrder("D")]
     public class EmailController : ApiController
 {
+        private readonly RabbitMQConfiguration _rabbitMQConfiguration;
+        private static IMessageQueueService<CreateEmailRequest> _messageQueueService;
+        public EmailController(RabbitMQConfiguration rabbitMQConfiguration)
+        {
+            _rabbitMQConfiguration = rabbitMQConfiguration;
+            _messageQueueService = new MessageQueueService<CreateEmailRequest>(_rabbitMQConfiguration.EmailAlertRequestPath, _rabbitMQConfiguration);
+        }
         /// <summary>
         /// Gets the emailId with the specified identifier, if it exists.
         /// </summary>
@@ -37,7 +46,7 @@ namespace Presentation.Controllers
         /// <param name="request">The create email request.</param>
         /// <param name="cancellationToken">The cancellation token.</param>
         /// <returns>The identifier of the newly created email.</returns>
-        [HttpPost("/createEmail")]
+        [HttpPost(), Route("createEmail")]
         [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<IActionResult> CreateEmail(
@@ -49,6 +58,21 @@ namespace Presentation.Controllers
             var emailId = await Sender.Send(command, cancellationToken);
 
             return CreatedAtAction(nameof(CreateEmail), new { emailId }, emailId);
+        }
+
+        /// <summary>
+        /// publish a new email based on the specified request.
+        /// </summary>
+        /// <param name="request">The create email request.</param>
+        /// <returns>The identifier of the newly created order.</returns>
+        [HttpPost(), Route("publish")]
+        [ProducesResponseType(typeof(Guid), StatusCodes.Status201Created)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public IActionResult PublishEmailAlert(
+            [FromBody] CreateEmailRequest request)
+        {           
+            _messageQueueService.Send(request);
+            return Ok("Request received for processing");
         }
     }
 }
