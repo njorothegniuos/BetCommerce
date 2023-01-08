@@ -16,7 +16,7 @@ namespace Application.Product.Queries.GetProducts
             GetProductsQuery request,
             CancellationToken cancellationToken)
         {
-            const string sql = @"SELECT * FROM ShoppingCarts";
+            const string sql = @"SELECT * FROM Products";
 
             var shoppingCartResponse = await _dbConnection.QueryAsync<ProductListingResponse>(
                 sql,null);

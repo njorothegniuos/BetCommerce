@@ -68,6 +68,13 @@
             <param name="cancellationToken">The cancellation token.</param>
             <returns>The product with the specified identifier, if it exists.</returns>
         </member>
+        <member name="M:Presentation.Controllers.ProductController.GetProducts(System.Threading.CancellationToken)">
+            <summary>
+            Gets the products
+            </summary>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The products list.</returns>
+        </member>
         <member name="M:Presentation.Controllers.ProductController.CreateProduct(Application.Product.Commands.CreateProduct.CreateProductRequest,System.Threading.CancellationToken)">
             <summary>
             Creates a new product based on the specified request.
@@ -104,6 +111,14 @@
             <param name="request">The create ShoppingCart request.</param>
             <param name="cancellationToken">The cancellation token.</param>
             <returns>The identifier of the newly created ShoppingCart.</returns>
+        </member>
+        <member name="M:Presentation.Controllers.ShoppingCartController.RemoveFromShoppingCartById(Application.ShoppingCart.Commands.DeleteShoppingCart.DeleteFromShoppingCartRequest,System.Threading.CancellationToken)">
+            <summary>
+            Deletes a  ShoppingCart based on the specified request.
+            </summary>
+            <param name="request">The ShoppingCart item request.</param>
+            <param name="cancellationToken">The cancellation token.</param>
+            <returns>The identifier of the deleted  ShoppingCart item.</returns>
         </member>
     </members>
 </doc>

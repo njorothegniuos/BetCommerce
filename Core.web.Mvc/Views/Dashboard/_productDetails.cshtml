@@ -1,0 +1,104 @@
+﻿@model Core.Web.DTOs.Response.ProductDTO
+@{
+    ViewBag.Title = "Product Details";
+}
+
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox">
+                <div class="panel-body">
+                    <div class="panel-group" id="accordion">
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h5 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Product</a>
+                                </h5>
+                            </div>
+
+                            <div class="panel panel-default">
+
+                                <div id="collapseSix" class="panel-collapse collapse in">
+                                    <div class="panel-body">
+                                        <div id="CustomerInfoOriginal1">
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                @if (Model != null)
+                                                {
+                                                    <div class="col-lg-3">
+                                                        <div class="form-group">
+                                                            @if (Model.Image != null)
+                                                            {
+                                                                var imgSrc = String.Format("data:image/gif;base64,{0}", Model.Image);
+
+                                                                <img class="img-responsive" src="@Url.Content(imgSrc)" alt="@Model.Image" width="250" />
+
+                                                                imgSrc = string.Empty;
+
+                                                            }
+                                                            else
+                                                            {
+                                                                @Html.Label("Not available")
+                                                            }
+                                                        </div>
+                                                    </div>
+                                                }
+                                                </div>
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            @Html.LabelFor(model => model.Name, new { @class = "control-label" })
+                                                        @Html.TextBoxFor(model => model.Name, new { @class = "form-control  input-md alpha alphaspace", @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="col-sm-3">
+                                                        <div class="form-group">
+                                                            @Html.LabelFor(model => model.Price, new { @class = "control-label" })
+                                                        @Html.TextBoxFor(model => model.Price, new { @class = "form-control  input-md alpha alphaspace", @readonly = "readonly" })
+                                                        </div>
+                                                    </div>
+                                            </div>
+                                            
+                                        </div>
+                                        <div class="row">
+                                                <div class="col-lg-12">
+                                                    <div class="form-group">
+                                                        <div class="col-md-12 control-label">
+                                                            <button id="AddToCart" class="btn btn-primary" onclick="AddToCart_(this)">ADD TO CART</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@section Styles {
+    <link rel="stylesheet" href="~/Content/plugins/iCheck/custom.css" />
+    <link rel="stylesheet" href="~/Content/plugins/steps/jquery.steps.css" />
+}
+
+    <script type="text/javascript">
+        function AddToCart_(e) {
+            var value = '@Model.Id';
+            console.log("selectedValue" + value);
+            $.ajax({
+                type: 'Post',
+                url: '/Dashboard/AddToCart/',
+                data: { id: '@Model.Id' }
+            })
+                .done(function (data) {
+                    swal("Result:", data, "success");
+                });
+        }
+    </script>

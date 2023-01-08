@@ -1,0 +1,290 @@
+﻿/* custom css*/
+.btn-btn_f {
+    background-color: #22398d !important;
+}
+
+html {
+    background-color: #ECEFF1;
+}
+
+body {
+    padding-bottom: 20px;
+    background-color: #ECEFF1;
+    font-family: "Nunito","Helvetica Neue",sans-serif;
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-family: "Nunito","Helvetica Neue",sans-serif !important;
+}
+
+/* Wrapping element */
+/* Set some basic padding to keep content from hitting the edges */
+.body-content {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* Carousel */
+.carousel-caption p {
+    font-size: 20px;
+    line-height: 1.4;
+}
+
+/* Make .svg files in the carousel display properly in older browsers */
+.carousel-inner .item img[src$=".svg"] {
+    width: 100%;
+}
+
+/* QR code generator */
+#qrCode {
+    margin: 15px;
+}
+
+/* Hide/rearrange for smaller screens */
+@media screen and (max-width: 767px) {
+    /* Hide captions */
+    .carousel-caption {
+        display: none;
+    }
+}
+
+/* Styles for validation helpers
+-----------------------------------------------------------*/
+.field-validation-error {
+    color: #f00;
+    font-size: 10px;
+}
+
+.field-validation-valid {
+    display: none;
+}
+
+.input-validation-error {
+    border: 1px solid #f00 !important;
+    background-color: #fee !important;
+}
+
+.validation-summary-errors {
+    font-weight: normal;
+    color: #f00;
+    font-size: 12px;
+}
+
+.validation-summary-valid {
+    display: none;
+}
+
+.validation-summary-errors ul {
+    list-style: none;
+}
+
+.validation-summary-errors span {
+    font-weight: bold;
+}
+
+.field-error-box {
+    color: #f00;
+    font-size: 10px;
+    background-color: #ffcccc;
+    margin: 3px 0;
+    padding: 3px 7px;
+    border-radius: 4px;
+    border: 1px solid #ff6666;
+}
+
+    .field-error-box i {
+        margin-right: 5px;
+    }
+/*--------------------------------------------------------------*/
+.navbar-default .navbar-brand {
+    color: #fff;
+}
+
+.navbar-default .navbar-brand:hover {
+    color: #e5e5e5;
+}
+/*====== Template ===== */
+.navbar-default {
+    background-color: #22398d;
+    border: medium none;
+    margin-bottom: 0;
+    border-bottom: 1px solid #0a7676;
+}
+
+.login-disclaimer {
+    font-size: 11px;
+    text-align: center;
+}
+
+.footer {
+    background-color: #f8fbf5;
+    color: #35726f;
+    font-size: 11px;
+}
+
+.footer.unauth {
+    left: 0px;
+}
+.navbar-brand-logo {
+    float: left;
+    height: 50px;
+    padding: 10px 10px;
+    font-size: 18px;
+    line-height: 20px;
+}
+.app-logo {
+    display:block;
+    max-width:100%;
+    height:auto;
+}
+.word-wrap {
+    word-wrap: normal;
+    word-break: break-all;
+    white-space: normal;
+    display: block;
+    height: auto;
+    margin: 3px;
+    line-height: 1.4;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+hr {
+    margin-top: 10px !important;
+    margin-bottom: 10px !important;
+}
+.header-title-sm {
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    line-height: 14px;
+    margin-bottom: 8px;
+    text-transform: uppercase;
+}
+.card {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    margin: 20px 0;
+    box-shadow: 0 1px 4px 0 rgba(0, 0, 0, 0.14);
+    border-radius: 3px;
+    color: rgba(0, 0, 0, 0.87);
+    background: #fff;
+}
+.card .card-header {
+    box-shadow: 0 10px 30px -12px rgba(0, 0, 0, 0.42), 0 4px 25px 0px rgba(0, 0, 0, 0.12), 0 8px 10px -5px rgba(0, 0, 0, 0.2);
+    margin: -20px 15px 0;
+    border-radius: 100%;
+    padding: 15px;
+    background-color: #999999;
+}
+.card-stats .card-header {
+    float: left;
+    text-align: center;
+}
+.card-stats .card-header i {
+    font-size: 30px;
+    line-height: 40px;
+    width: 40px;
+    height: 40px;
+}
+
+.card [data-background-color] {
+    color: #FFFFFF;
+}
+.card [data-background-color="orange"] {
+    background: linear-gradient(60deg, #ffa726, #fb8c00);
+    box-shadow: 0 12px 20px -10px rgba(255, 152, 0, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(255, 152, 0, 0.2);
+}
+.card [data-background-color="blue"] {
+    background: linear-gradient(60deg, #26c6da, #00acc1);
+    box-shadow: 0 12px 20px -10px rgba(0, 188, 212, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(0, 188, 212, 0.2);
+}
+.card [data-background-color="red"] {
+    background: linear-gradient(60deg, #ef5350, #e53935);
+    box-shadow: 0 12px 20px -10px rgba(244, 67, 54, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(244, 67, 54, 0.2);
+}
+.card [data-background-color="purple"] {
+    background: linear-gradient(60deg, #ab47bc, #8e24aa);
+    box-shadow: 0 12px 20px -10px rgba(156, 39, 176, 0.28), 0 4px 20px 0px rgba(0, 0, 0, 0.12), 0 7px 8px -5px rgba(156, 39, 176, 0.2);
+}
+.card-stats .card-content {
+    text-align: right;
+    padding-top: 10px;
+}
+.card .card-content {
+    padding: 10px 20px;
+    padding-top: 15px;
+}
+
+.card .card-content .category {
+    margin-bottom: 0;
+}
+
+.card-stats .title {
+    margin: 0;
+}
+
+.card .title {
+    margin-top: 0;
+    margin-bottom: 5px;
+}
+
+.card .category:not([class*="text-"]) {
+    color: #999999;
+}
+
+.card .card-footer {
+    margin: 0 20px 10px;
+    padding-top: 10px;
+    border-top: 1px solid #eeeeee;
+}
+
+.card .card-footer .stats {
+    line-height: 20px;
+    color: #999999;
+    font-size: 13px;
+}
+
+.card .card-footer div {
+    display: inline-block;
+}
+.wizard > .steps .current a {
+    background: #1C344E none repeat scroll 0 0 !important;
+}
+
+.wizard > .steps .disabled a {
+    background: #ffffff none repeat scroll 0 0 !important;
+    border: 1px solid #eaeaea !important;
+    color: #333333 !important;
+    cursor: default !important;
+}
+
+.wizard > .steps .done a, .wizard > .steps .done a:hover, .wizard > .steps .done a:active {
+    background: #6c7d8c none repeat scroll 0 0 !important;
+    color: #fff !important;
+}
+
+.wizard > .content {
+    background: #FFFFFF none repeat scroll 0 0 !important;
+    min-height: 240px !important;
+    padding: 10px !important;
+}
+
+.wizard > .content > .body {
+    padding: 5px 10px !important;
+    position: relative !important;
+}
+.wizard > .actions a, .wizard > .actions a:hover, .wizard > .actions a:active {
+    background: #096969!important;
+}
+.wizard > .actions > ul {
+    margin-top:10px;
+}
+.alert {
+    padding: 10px!important;
+    margin-bottom: 10px!important;
+}
+.required:before {
+    content: "*";
+    font-weight: bold;
+}
