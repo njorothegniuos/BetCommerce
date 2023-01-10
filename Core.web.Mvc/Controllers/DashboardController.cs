@@ -165,6 +165,27 @@ namespace Core.web.Mvc.Controllers
                 var responseData = JsonConvert.DeserializeObject<string>(res);
             }
 
+
+            //PUBLISH ORDER 
+            CreateOrderRequest _request = new CreateOrderRequest(new Guid(currentUser.Id), orderNumber,4);
+            using (var pclient = new HttpClient())
+            {
+                var api_url = _configuration["WebApi:WebApiClientUrl"];
+                api_url = api_url + "v1/order/publish";
+
+                pclient.DefaultRequestHeaders.Add("Accept", "application/json");
+
+                var data = JsonConvert.SerializeObject(_request);
+                var content = new StringContent(data, Encoding.UTF8, "application/json"); ;
+
+                var response = await pclient.PostAsync(api_url, content);
+
+                var res = await response.Content.ReadAsStringAsync();
+                res = HttpUtility.HtmlDecode(res);
+
+                var responseData = JsonConvert.DeserializeObject<string>(res);
+            }
+
             TempData["Success"] = "Checkout was successfully!";
 
             return View();
