@@ -146,23 +146,57 @@ namespace Core.web.Mvc.Controllers
             var messageBody = $"You have purchased items from BET commerce order number {orderNumber}.<br/> Regards, <br/> Bet Team";
 
             CreateEmailRequest request = new CreateEmailRequest("info@bet.com", currentUser.Email, "support@bet.com", subject, messageBody, true, DLRStatus.Pending.ToString(), ServiceOrigin.WebMVC.ToString(), "0", "0", "0");
-
-            using (var pclient = new HttpClient())
+            try
             {
-                var api_url = _configuration["WebApi:WebApiClientUrl"];
-                api_url = api_url + "v1/email/publish";
+                using (var pclient = new HttpClient())
+                {
+                    var api_url = _configuration["WebApi:WebApiClientUrl"];
+                    api_url = api_url + "v1/email/publish";
 
-                pclient.DefaultRequestHeaders.Add("Accept", "application/json");
+                    pclient.DefaultRequestHeaders.Add("Accept", "application/json");
 
-                var data = JsonConvert.SerializeObject(request);
-                var content = new StringContent(data, Encoding.UTF8, "application/json"); ;
+                    var data = JsonConvert.SerializeObject(request);
+                    var content = new StringContent(data, Encoding.UTF8, "application/json"); ;
 
-                var response = await pclient.PostAsync(api_url, content);
+                    var response = await pclient.PostAsync(api_url, content);
 
-                var res = await response.Content.ReadAsStringAsync();
-                res = HttpUtility.HtmlDecode(res);
+                    var res = await response.Content.ReadAsStringAsync();
+                    res = HttpUtility.HtmlDecode(res);
 
-                var responseData = JsonConvert.DeserializeObject<string>(res);
+                    var responseData = JsonConvert.DeserializeObject<string>(res);
+                }
+            }
+            catch (Exception ex)
+            {
+                Serilog.Log.Error(ex.Message);
+            }
+
+
+            try
+            {
+                //PUBLISH ORDER 
+                CreateOrderRequest _request = new CreateOrderRequest(new Guid(currentUser.Id), orderNumber, 4);
+                using (var pclient = new HttpClient())
+                {
+                    var api_url = _configuration["WebApi:WebApiClientUrl"];
+                    api_url = api_url + "v1/order/publish";
+
+                    pclient.DefaultRequestHeaders.Add("Accept", "application/json");
+
+                    var data = JsonConvert.SerializeObject(_request);
+                    var content = new StringContent(data, Encoding.UTF8, "application/json"); ;
+
+                    var response = await pclient.PostAsync(api_url, content);
+
+                    var res = await response.Content.ReadAsStringAsync();
+                    res = HttpUtility.HtmlDecode(res);
+
+                    var responseData = JsonConvert.DeserializeObject<string>(res);
+                }
+            }
+            catch (Exception ex)
+            {
+                Serilog.Log.Error(ex.Message);
             }
 
             TempData["Success"] = "Checkout was successfully!";
@@ -231,7 +265,7 @@ namespace Core.web.Mvc.Controllers
         {
             var currentUser = await _userManager.FindByNameAsync(User.Identity.Name);
 
-            if (id !=Guid.Empty)
+            if (id != Guid.Empty)
             {
                 //ToDo: make API call Refactor:use HttpRequestAppService
                 using (var pclient = new HttpClient())
@@ -241,7 +275,7 @@ namespace Core.web.Mvc.Controllers
 
                     pclient.DefaultRequestHeaders.Add("Accept", "application/json");
 
-                    CreateShoppingCartRequest request = new CreateShoppingCartRequest(new Guid(currentUser.Id),id, 1);
+                    CreateShoppingCartRequest request = new CreateShoppingCartRequest(new Guid(currentUser.Id), id, 1);
 
                     var data = JsonConvert.SerializeObject(request);
                     var content = new StringContent(data, Encoding.UTF8, "application/json"); ;
@@ -274,7 +308,7 @@ namespace Core.web.Mvc.Controllers
 
                     pclient.DefaultRequestHeaders.Add("Accept", "application/json");
 
-                    DeleteFromShoppingCartRequest request = new DeleteFromShoppingCartRequest(id,new Guid(currentUser.Id), id, 1);
+                    DeleteFromShoppingCartRequest request = new DeleteFromShoppingCartRequest(id, new Guid(currentUser.Id), id, 1);
 
                     var data = JsonConvert.SerializeObject(request);
                     var content = new StringContent(data, Encoding.UTF8, "application/json"); ;
