@@ -1,7 +1,7 @@
 ﻿@model Core.web.Mvc.Authentication.Models.AccountViewModels.AccountRegistrationModel
 
 @{
-    ViewData["Title"] = "Create Account";
+    ViewData["Title"] = "Register";
     Layout = "~/Views/Shared/_LayoutUnAuth.cshtml";
     <style>
 
@@ -15,125 +15,154 @@
 
 <div class="page-content">
     <div class="row">
-        <div class="col-md-10 col-md-offset-1">
+        <div class="col-md-4 col-md-offset-4">
             <div class="panel panel-default m-t-10">
                 <div class="panel-heading"><h3 class="text-center">Create Account</h3></div>
-                <div class="panel-body col-sm-offset-1">
-                    <p class="text-center alert alert-good"><i class="text-center fa fa-address-book-o"></i> Enter your details in the form below</p>
-                    @if (TempData["Success"] != null)
-                    {
-                        <div class="alert alert-success fade in">
-                            <button class="close" data-dismiss="alert">
-                                <i class="fa-fw fa fa-check-circle"></i>
-                            </button>
-                            @TempData["Success"]
-                        </div>
-                    }
-                    @if (TempData["Error"] != null)
-                    {
-                        <div class="alert alert-danger fade in">
-                            <button class="close" data-dismiss="alert">
-                                <i class="fa-fw fa fa-times"></i>
-                            </button>
-                            @TempData["Error"]
-                        </div>
-                    }
+                <div class="panel-body">
 
-                    @using (Html.BeginForm("Register", "account", new { @class = "form-horizontal", role = "form" }, FormMethod.Post))
-                    {
+                    <section id="loginForm">
                         <div class="row">
-                            @Html.AntiForgeryToken()
-                            <div class="form-group">
-                                <div class="col-md-12 text-center">
-                                    <div asp-validation-summary="ModelOnly"></div>
+                            <div class="col-md-3 hidden-xs">
+                                <div class="text-center">
+                                    <i class="fa fa-user-alt fa-5x" aria-hidden="true"></i>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <p class="text-muted font-13">
+                                    Enter your details below.
+                                </p>
+                                @using (Html.BeginForm("Register", "account", FormMethod.Post, new { Area = "Authentication" }))
+                                {
+                                    @Html.AntiForgeryToken()
+     
+                                    <div class="row">
+                                        <div>
+                                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-offset-1 col-sm-8">
+                                                <div class="form-group">
 
-                                </div>
-                            </div>
-                            
-                            <div class="row">
-                                <div class="col-sm-2">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                            <input placeholder="FirstName" id="FirstName" name="FirstName" value="" class="form-control" AUTOCOMPLETE="off">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <span asp-validation-for="FirstName" class="text-danger"></span>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-user"></i></span>
-                                            <input placeholder="LastName" id="LastName" name="LastName" value="" class="form-control"  AUTOCOMPLETE="off">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <span asp-validation-for="LastName" class="text-danger"></span>
-                                    </div>
-                                </div>
-                                <div class="col-sm-2">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-mail-forward"></i></span>
-                                            <input placeholder="Email" id="login" name="Email" value="" class="form-control" type="email" AUTOCOMPLETE="off">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <span asp-validation-for="Email" class="text-danger"></span>
-                                    </div>
-                                </div>
-                                <div class="col-sm-1"> </div>
-                                
-                            </div>
-                            
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                                        @Html.EditorFor(m => m.FirstName, new { htmlAttributes = new { @class = "form-control required", placeholder = "FirstName", autocomplete = "off" } })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+                                            </div>
 
-                            <div class="row">
-                                <div class="col-sm-2">
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                            <input placeholder="Confirm Password" id="login" name="Password" value="" class="form-control" type="password" AUTOCOMPLETE="off">
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-offset-1 col-sm-8">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="fa fa-user"></i></span>
+                                                        @Html.EditorFor(m => m.LastName, new { htmlAttributes = new { @class = "form-control required", placeholder = "LastName", autocomplete = "off" } })
+                                                       
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-offset-1 col-sm-8">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="fa fa-envelope"></i></span>
+                                                        @Html.EditorFor(m => m.Email, new { htmlAttributes = new { @class = "form-control required", placeholder = "Email",type="email", autocomplete = "off" } })
+                                                       
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                @Html.ValidationMessageFor(m => m.Email, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-offset-1 col-sm-8">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                                        @Html.EditorFor(m => m.Password, new { htmlAttributes = new { @class = "form-control required", placeholder = "Password", autocomplete = "off" } })
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-offset-1 col-sm-8">
+                                                <div class="form-group">
+                                                    <div class="input-group">
+                                                        <span class="input-group-addon"><i class="fa fa-lock"></i></span>
+                                                        @Html.EditorFor(m => m.PasswordConfirm, new { htmlAttributes = new { @class = "form-control required", placeholder = "Password", autocomplete = "off" } })
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-sm-12">
+                                                @Html.ValidationMessageFor(m => m.PasswordConfirm, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-sm-12">
+                                                <div>
+                                                    <div>
+                                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                                    </div>
+                                                    @if (TempData["Success"] != null)
+                                                    {
+                                                        <div class="alert alert-success fade in">
+                                                            <button class="close" data-dismiss="alert">
+                                                                <i class="fa-fw fa fa-check-circle"></i>
+                                                            </button>
+                                                            @TempData["Success"]
+                                                        </div>
+                                                    }
+                                                    @if (TempData["Error"] != null)
+                                                    {
+                                                        <div class="alert alert-danger fade in">
+                                                            <button class="close" data-dismiss="alert">
+                                                                <i class="fa-fw fa fa-times"></i>
+                                                            </button>
+                                                            @TempData["Error"]
+                                                        </div>
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-offset-1 col-sm-8 text-right">
+                                                <button type="submit" class="btn btn-btn_f btn-block left-icon"><i class="fa fa-sign-in"></i> Log in</button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="col-sm-12">
-                                        <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    <div class="col-sm-2">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-                                            <input placeholder="PasswordConfirm" id="login" name="PasswordConfirm" value="" class="form-control" type="password" AUTOCOMPLETE="off">
-                                        </div>
-                                    </div>
-                                    <div class="col-sm-12">
-                                        <span asp-validation-for="PasswordConfirm" class="text-danger"></span>
-                                    </div>
-                                </div>
+                                }
                             </div>
-                        
-                            <div class="form-group">
-                                <div class="col-md-offset-4 col-lg-8">
-                                    <button type="submit" class="btn btn-btn_f"><i class="fa fa-send"></i> Register</button>
+                        </div>
+                        <hr />
+                        <div class="form-group">
+                            <div class="col-sm-12 login-disclaimer text-danger">
+                                <a href="@Url.Action("login", "account")" style="color: #22398d;">
+                                    Already have an account?<small><b>Login here</b></small>
+                                </a>
+                            </div>
+                            <br />
+                           
+                            <div class="col-sm-12">
+                                <div class="pull-right">
+                                    <a href="https://www.linkedin.com/company/betsoftware/?originalSubdomain=za"><span> <i class="fa fa-linkedin fa-1x"></i>  </span> </a> &nbsp; <a href="#"><span><i class="fa fa-twitter fa-1x"></i> </span> </a> &nbsp; <a href="#" target="_blank"> <span><i class="fa fa-facebook fa-1x"></i> </span></a>
                                 </div>
                             </div>
                         </div>
-                    }
-
-                    <div class="col-sm-12">
-                        <div class="col-md-offset-4 col-md-8">
-                            <a href="@Url.Action("login", "account")" style="color: #22398d;">
-                                Already have an account?<small><b>Login here</b></small>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="col-sm-12">
-                        <div class="pull-right">
-                            <a href="https://www.linkedin.com/company/betsoftware/?originalSubdomain=za"><span> <i class="fa fa-linkedin fa-1x"></i>  </span> </a> &nbsp; <a href="#"><span><i class="fa fa-twitter fa-1x"></i> </span> </a> &nbsp; <a href="#" target="_blank"> <span><i class="fa fa-facebook fa-1x"></i> </span></a>
-                        </div>
-                    </div>
+                    </section>
                 </div>
             </div>
 
@@ -142,4 +171,7 @@
 </div>
 
 
+@section Scripts {
 
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

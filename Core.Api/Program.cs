@@ -1,9 +1,11 @@
 using Application.Behaviors;
 using Core.Api.Middleware;
+using Core.Api.OptionsSetup;
 using Domain.Abstractions;
 using FluentValidation;
 using Infrastructure;
 using MediatR;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.EntityFrameworkCore;
 using Presentation;
@@ -24,10 +26,11 @@ IConfiguration config = new ConfigurationBuilder()
 RabbitMQConfiguration rabbitMqOptions = config.GetSection("RabbitMqQueueSettings").Get<RabbitMQConfiguration>();
 builder.Services.AddSingleton(rabbitMqOptions);
 
+builder.Services.AddPresentation(config);
 var presentationAssembly = typeof(Presentation.AssemblyReference).Assembly;
 builder.Services.AddControllers()
     .AddApplicationPart(presentationAssembly);
-builder.Services.AddPresentation(config);
+
 
 
 var applicationAssembly = typeof(Application.AssemblyReference).Assembly;
@@ -47,6 +50,15 @@ builder.Services.AddScoped<IDbConnection>(
     factory => factory.GetRequiredService<ApplicationDbContext>().Database.GetDbConnection());
 
 builder.Services.AddTransient<ExceptionHandlingMiddleware>();
+
+builder.Services.ConfigureOptions<JwtOptionsSetup>();
+builder.Services.ConfigureOptions<JwtBearerOptionsSetup>();
+
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer();
+
+builder.Services.AddAuthorization();
+
 builder.Host.UseSerilog((context, configuration) =>
 {
 
@@ -64,19 +76,19 @@ await ApplyMigrations(app.Services);
 if (app.Environment.IsDevelopment())
 {
 }
-var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
-
-app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseHttpsRedirection();
 
 app.UseRouting();
 
 app.UseCors("AllowAllOrigins");
-
 app.UseAuthentication();
 
 app.UseAuthorization();
+
+var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 app.UseSwaggerDocumentation(provider);
 

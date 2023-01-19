@@ -1,0 +1,115 @@
+﻿@model Core.web.Mvc.Authentication.Models.AccountViewModels.AccountGenericModel
+@{
+    ViewData["Title"] = "User Profile";
+
+    <style>
+
+        /* custom css*/
+        .btn-btn_f {
+            background-color: #22398d !important;
+            color: #fff;
+        }
+    </style>
+}
+<h2 class="header-title">User Profile</h2>
+<div class="row">
+    <div class="col-md-6">
+        <div class="card-box">
+            <p class="text-muted">Current logged in user details:</p>
+            <hr />
+            <div class="row">
+                <div class="col-md-4"><span><i class="fa fa-user"></i></span> User Name:</div>
+                <div class="col-md-8 control-label">
+                    <strong>@Model.UserName</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"><span><i class="fa fa-book"></i></span> Full Names:</div>
+                <div class="col-md-8 control-label">
+                    <strong>@Model.FullName</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"><span><i class="fa fa-mail-forward"></i></span> E-Mail:</div>
+                <div class="col-md-8">
+                    <strong>@Model.Email</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"><span><i class="fa fa-mobile-phone"></i></span> PhoneNumber:</div>
+                <div class="col-md-8">
+                    <strong>@Model.PhoneNumber</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"><span><i class="fa fa-times"></i></span> Created On:</div>
+                <div class="col-md-8">
+                    <strong>@Model.CreatedDate.ToString("dd-MMM-yyyy")</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"><span><i class="fa fa-refresh"></i></span> User Status:</div>
+                <div class="col-md-8">
+                    <strong>@Model.RecordStatusDescription</strong>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4"><span><i class="fa fa-times-circle"></i></span> Last Password Changed Date:</div>
+                <div class="col-md-8">
+                    <strong>@Model.LastPasswordChangedDate</strong>
+                </div>
+            </div>
+            <hr />
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card-box">
+            <div class="text-muted header-title-sm">Change Password</div>
+            <hr />
+            
+            @using (Html.BeginForm("ChangePasswordProfile", "Manage", FormMethod.Post, new { Area = "Authentication" }))
+            {
+                @Html.AntiForgeryToken()
+
+                <h4>Password Details</h4>
+                <fieldset>
+                    <div id="primaryDetailsOriginal">
+                        <div class="row">
+                            
+                            <div class="col-lg-3">
+                                @Html.LabelFor(model => model.OldPassword, htmlAttributes: new { @class = "control-label" })
+                                <div class="form-group">
+                                    @Html.ValidationMessageFor(model => model.OldPassword, "", new { @class = "text-danger" })
+                                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control ", required = "required", AUTOCOMPLETE = "off", type = "password" } })
+
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                @Html.LabelFor(model => model.NewPassword, htmlAttributes: new { @class = "control-label" })
+                                <div class="form-group">
+                                    @Html.ValidationMessageFor(model => model.NewPassword, "", new { @class = "text-danger" })
+                                    @Html.EditorFor(model => model.NewPassword, new { htmlAttributes = new { @class = "form-control ", required = "required", AUTOCOMPLETE = "off", type = "password" } })
+
+                                </div>
+                            </div>
+                            <div class="col-lg-3">
+                                @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label" })
+                                <div class="form-group">
+                                    @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
+                                    @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control ", required = "required", AUTOCOMPLETE = "off", type = "password" } })
+
+                                </div>
+                            </div>
+                            <br /><br />
+                            <div class="form-group">
+                                <div class="col-sm-4 pull-right">
+                                    <button type="submit" class="btn btn-btn_f"><i class="fa fa-send-o"></i> Save</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            }
+        </div>
+    </div>
+</div>

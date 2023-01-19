@@ -1,17 +1,19 @@
 ﻿using Application.Product.Commands.CreateProduct;
 using Mapster;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RabbitMQ.Services.Interface;
 using RabbitMQ.Utility;
 using Swagger.Models.Attribute;
+using Swagger.Models.Common;
 
 namespace Presentation.Controllers
 {
     /// <summary>
     /// Represents the product controller.
     /// </summary>
-   // [Authorize(Policy = nameof(AuthPolicy.GlobalRights))]
+    //[Authorize]
     [Route("v{version:apiVersion}/order"), SwaggerOrder("B")]
     public class OrderController : ApiController
     {

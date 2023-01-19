@@ -1,5 +1,15 @@
-﻿<div class="topbar">
-    <div class="navbar navbar-default" role="navigation">
+﻿@using Core.Web.Extensions
+
+<div class="topbar">
+    <div class="topbar-left">
+        <div class="text-center">
+            <a href="#" class="logo">
+                <img alt="BET" src="~/Content/images/BET_40x40.png" style="position: relative; width: 92px;  height: 92px; top: 6px; left: 15px; left: 15px; background-size: contain;" class="img-responsive" id="appIcon" />
+                <span></span>
+            </a>
+        </div>
+    </div>
+    <div class="navbar navbar-default" role="navigation" style="background-color:#22398d;">
         <div class="container">
             <div class="">
                 <div class="pull-left">
@@ -8,11 +18,12 @@
                     </button>
                     <span class="clearfix"></span>
                 </div>
-               
+                @if (User.Identity.IsAuthenticated)
+                {
                     <ul class="nav navbar-nav hidden-xs">
-                        <li><a href="#" class="waves-effect waves-light">BET | @ViewBag.Title</a></li>
+                        <li><a href="#" class="waves-effect waves-light">@DefaultSettings.Instance.ApplicationDisplayName | @ViewBag.Title</a></li>
                     </ul>
-             
+                }
                 <div class="navbar-header pull-right">
                     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#rightNav">
                         <span class="icon-bar"></span>
@@ -27,47 +38,48 @@
                         <li class="hidden-xs">
                             <a href="#" id="btn-fullscreen" class="waves-effect waves-light"><i class="glyphicon glyphicon-fullscreen"></i></a>
                         </li>
-                       
+                        @if (User.Identity.IsAuthenticated)
+                        {
                             <li class="dropdown top-menu-item-xs">
                                 <a href="" class="dropdown-toggle profile waves-effect waves-light" data-toggle="dropdown" aria-expanded="false">
                                     <span id="current_user_id" style="display:none;">
-                                      
-                                            <strong class="font-bold"> TEST</strong>
-                                        
+                                        @{
+                                            var a =  User.Identity.Name; <strong class="font-bold"> @a</strong>
+                                        }
                                     </span>
                                     <i class="fa fa-user text-pink"></i>
                                     <span></span>
                                 </a>
                                 <ul class="dropdown-menu">
                                     <li>
-                                        <a href="@Url.Action("Profile", "Manage", new {Area = ""})">
+                                        <a href="@Url.Action("Profile", "Manage", new {Area = "UserProfile"})">
                                             <i class="fa fa-user m-r-10 text-custom"></i> Profile
 
                                         </a>
                                     </li>
                                     <li class="divider"></li>
                                     <li>
-                                        <a href="@Url.Action("Login", "Account", new {Area = ""})">
+                                        <a href="@Url.Action("Login", "Account", new {Area = "Authentication"})">
                                             <i class="fa fa-sign-out m-r-10 text-danger"></i> Log out
                                         </a>
                                     </li>
 
                                 </ul>
                             </li>
-                        
+                            <li>
+                                <a href="@Url.Action("Cart", "Dashboard", new {Area = ""})">
+                                    <i class="fa-shopping-cart text-success"></i> Cart
+                                </a>
+                            </li>
+                        }
                         <li class="dropdown top-menu-item-xs">
                             <a href="javascript:void(0)" class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="false">
                                 <i class="glyphicon glyphicon-question-sign"></i>
                                 <span>Help</span><span style="margin-left:7px;" class="caret"></span>
                             </a>
                         </li>
-                        <li>
-                            <a href="@Url.Action("Cart", "Dashboard", new {Area = ""})">
-                                <i class="fa-shopping-cart text-success"></i> Cart
-                            </a>
-                        </li>
                         <li class="hidden-xs">
-                            <a href="@Url.Action("Login", "Account", new {Area = ""})" class="waves-effect waves-light">
+                            <a href="@Url.Action("Login", "Account", new {Area = "Authentication"})" class="waves-effect waves-light">
                                 <i class="fa fa-sign-out m-r-10 text-danger"></i>
 
                             </a>

@@ -1,6 +1,7 @@
 ﻿using Application.Email.Commands.CreateEmail;
 using Application.Email.Queries.GetEmailById;
 using Mapster;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using RabbitMQ.Services.Interface;
@@ -13,6 +14,7 @@ namespace Presentation.Controllers
     /// Represents the Email controller.
     /// </summary>
     [Route("v{version:apiVersion}/email"), SwaggerOrder("D")]
+    //[Authorize]
     public class EmailController : ApiController
 {
         private readonly RabbitMQConfiguration _rabbitMQConfiguration;

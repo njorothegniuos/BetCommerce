@@ -2,7 +2,6 @@
 using Application.ShoppingCart.Commands.DeleteShoppingCart;
 using Application.ShoppingCart.Queries.GetShoppingCartById;
 using Mapster;
-using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swagger.Models.Attribute;
@@ -12,7 +11,7 @@ namespace Presentation.Controllers
     /// <summary>
     /// Represents the ShoppingCart controller.
     /// </summary>
-   // [Authorize(Policy = nameof(AuthPolicy.GlobalRights))]
+   // [Authorize]
     [Route("v{version:apiVersion}/shoppingCart"), SwaggerOrder("C")]
     public class ShoppingCartController : ApiController
     {

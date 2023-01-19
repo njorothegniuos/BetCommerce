@@ -1,61 +1,87 @@
-﻿<div class="row border-bottom white-bg">
-    <nav class="navbar navbar-static-top" role="navigation">
-        <div class="navbar-header">
-            <button aria-controls="navbar" aria-expanded="false" data-target="#navbar" data-toggle="collapse" class="navbar-toggle collapsed" type="button">
-                <i class="fa fa-reorder"></i>
-            </button>
-            <a href="#" class="navbar-brand">MvcApplication</a>
-        </div>
-        <div class="navbar-collapse collapse" id="navbar">
-            <ul class="nav navbar-nav">
-                <li class="active">
-                    <a aria-expanded="false" role="button" href="@Url.Action("Index", "Layouts")"> Back to main Layout page</a>
-                </li>
-                <li class="dropdown">
-                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Menu item <span class="caret"></span></a>
-                    <ul role="menu" class="dropdown-menu">
-                        <li><a href="">Menu item</a></li>
-                        <li><a href="">Menu item</a></li>
-                        <li><a href="">Menu item</a></li>
-                        <li><a href="">Menu item</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Menu item <span class="caret"></span></a>
-                    <ul role="menu" class="dropdown-menu">
-                        <li><a href="">Menu item</a></li>
-                        <li><a href="">Menu item</a></li>
-                        <li><a href="">Menu item</a></li>
-                        <li><a href="">Menu item</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Menu item <span class="caret"></span></a>
-                    <ul role="menu" class="dropdown-menu">
-                        <li><a href="">Menu item</a></li>
-                        <li><a href="">Menu item</a></li>
-                        <li><a href="">Menu item</a></li>
-                        <li><a href="">Menu item</a></li>
-                    </ul>
-                </li>
-                <li class="dropdown">
-                    <a aria-expanded="false" role="button" href="#" class="dropdown-toggle" data-toggle="dropdown"> Menu item <span class="caret"></span></a>
-                    <ul role="menu" class="dropdown-menu">
-                        <li><a href="">Menu item</a></li>
-                        <li><a href="">Menu item</a></li>
-                        <li><a href="">Menu item</a></li>
-                        <li><a href="">Menu item</a></li>
-                    </ul>
-                </li>
+﻿@using Core.Web.Extensions
 
-            </ul>
-            <ul class="nav navbar-top-links navbar-right">
-                <li>
-                    <a href="#">
-                        <i class="fa fa-sign-out"></i> Log out
-                    </a>
-                </li>
-            </ul>
+<div class="topbar">
+    <div class="topbar-left">
+        <div class="text-center">
+            <a href="#" class="logo">
+                <img alt="FBLStatements" src="~/Content/images/BET_92.png" style="position: relative; width: 92px; top: 6px; left: 15px; left: 15px; background-size: contain;" class="img-responsive" id="appIcon" />
+                <span></span>
+            </a>
         </div>
-    </nav>
+    </div>
+    <div class="navbar navbar-default" role="navigation">
+        <div class="container">
+            <div class="">
+                <div class="pull-left">
+                    <button class="button-menu-mobile open-left waves-effect waves-light">
+                        <i class="fa fa-navicon"></i>
+                    </button>
+                    <span class="clearfix"></span>
+                </div>
+                @if (User.Identity.IsAuthenticated)
+                {
+                    <ul class="nav navbar-nav hidden-xs">
+                        <li><a href="#" class="waves-effect waves-light">@DefaultSettings.Instance.ApplicationDisplayName | @ViewBag.Title</a></li>
+                    </ul>
+                }
+                <div class="navbar-header pull-right">
+                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#rightNav">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                </div>
+
+                <div class="collapse navbar-collapse" id="rightNav">
+                    <ul class="nav navbar-nav navbar-right pull-right">
+
+                        <li class="hidden-xs">
+                            <a href="#" id="btn-fullscreen" class="waves-effect waves-light"><i class="glyphicon glyphicon-fullscreen"></i></a>
+                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="dropdown top-menu-item-xs">
+                                <a href="" class="dropdown-toggle profile waves-effect waves-light" data-toggle="dropdown" aria-expanded="false">
+                                    <span id="current_user_id" style="display:none;">
+                                        @{
+                                            var a = User.Identity.Name; <strong class="font-bold"> @a</strong>
+                                        }
+                                    </span>
+                                    <i class="fa fa-user text-pink"></i>
+                                    <span></span>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li>
+                                        <a href="@Url.Action("Profile", "Manage", new {Area = "UserProfile"})">
+                                            <i class="fa fa-user m-r-10 text-custom"></i> Profile
+
+                                        </a>
+                                    </li>
+                                    <li class="divider"></li>
+                                    <li>
+                                        <a href="@Url.Action("Login", "Account", new {Area = "Authentication"})">
+                                            <i class="fa fa-sign-out m-r-10 text-danger"></i> Log out
+                                        </a>
+                                    </li>
+
+                                </ul>
+                            </li>
+                        }
+                        <li class="dropdown top-menu-item-xs">
+                            <a href="javascript:void(0)" class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="false">
+                                <i class="glyphicon glyphicon-question-sign"></i>
+                                <span>Help</span><span style="margin-left:7px;" class="caret"></span>
+                            </a>
+                        </li>
+                        <li class="hidden-xs">
+                            <a href="@Url.Action("Login", "Account", new {Area = "Authentication"})" class="waves-effect waves-light">
+                                <i class="fa fa-sign-out m-r-10 text-danger"></i>
+
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

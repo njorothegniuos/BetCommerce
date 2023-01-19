@@ -57,22 +57,24 @@ namespace Core.Web.Areas.Authentication.Controllers
             }
 
             ApplicationUser user = new ApplicationUser();
-            user.UserName = applicationUser.Email;
-            user.Email = applicationUser.Email;
-            user.EmailConfirmed = false;
-            user.PhoneNumberConfirmed = false;
+            user.UserName = applicationUser.Email.Trim().ToUpper();
+            user.Email = applicationUser.Email.Trim().ToUpper();
+            user.NormalizedUserName = applicationUser.Email.Trim().ToUpper();
+            user.NormalizedEmail = applicationUser.Email.Trim().ToUpper();
+            user.EmailConfirmed = true;
+            user.PhoneNumberConfirmed = true;
+            user.PhoneNumber = "254700000000";
             user.CreatedDate = DateTime.Now;
             user.RecordStatus = (byte)RecordStatus.Approved;
             user.IsEnabled = true;
-            user.IsExternalUser = true;
+            user.IsExternalUser = false;
             user.LastPasswordChangedDate = DateTime.Now;
-            user.PhoneNumberConfirmed = false;
             user.FirstName = applicationUser.FirstName;
             user.OtherNames = applicationUser.LastName;
             user.LastLoginDateTime = DateTime.Now;
             user.ApprovedDate = DateTime.Now;
-            user.TwoFactorEnabled = true;
-            user.LockoutEnabled = false;
+            user.TwoFactorEnabled = false;
+            user.LockoutEnabled = true;
 
             //refactor move to app service
             string newPassword = PasswordStore.GenerateRandomPassword(new Core.web.Mvc.Utils.Infrastructure.PasswordOptions
@@ -103,9 +105,9 @@ namespace Core.Web.Areas.Authentication.Controllers
                 {
                     var api_url = _configuration["WebApi:WebApiClientUrl"];
                     api_url = api_url + "v1/email/publish";
-
+                    var token = "";
                     pclient.DefaultRequestHeaders.Add("Accept", "application/json");
-
+                    //pclient.DefaultRequestHeaders.Add($"Authorization", "Bearer {token}");
                     var data = JsonConvert.SerializeObject(request);
                     var content = new StringContent(data, Encoding.UTF8, "application/json"); ;
 
@@ -157,6 +159,7 @@ namespace Core.Web.Areas.Authentication.Controllers
             if (!ModelState.IsValid)
                 return View(viewModel);
 
+            viewModel.Email = viewModel.Email.Trim().ToUpper();
 
             var user = await _memoryCache.GetOrCreateAsync(key,
                 entry =>
@@ -195,7 +198,7 @@ namespace Core.Web.Areas.Authentication.Controllers
                 // This doesn't count login failures towards account lockout
                 // To enable password failures to trigger account lockout, change to shouldLockout: true
 
-                var signInStatus = await _signInManager.PasswordSignInAsync(user.UserName, viewModel.Password, false, false);
+                var signInStatus = await _signInManager.PasswordSignInAsync(user.UserName.Trim().ToUpper(), viewModel.Password, false, false);
 
                 if (signInStatus.Succeeded)
                 {

@@ -87,6 +87,7 @@ namespace Core.web.Mvc.Identity
                 ApplicationRole role = new ApplicationRole();
                 role.Name = "StandardUser";
                 role.Description = "Perform normal operations.";
+                role.IsEnabled = true;
                 IdentityResult roleResult = roleManager.
                 CreateAsync(role).Result;
             }
@@ -97,6 +98,7 @@ namespace Core.web.Mvc.Identity
                 ApplicationRole role = new ApplicationRole();
                 role.Name = "SuperAdministrator";
                 role.Description = "Perform all the operations.";
+                role.IsEnabled = true;
                 IdentityResult roleResult = roleManager.
                 CreateAsync(role).Result;
             }

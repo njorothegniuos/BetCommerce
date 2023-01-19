@@ -1,4 +1,6 @@
-﻿using Domain.Abstractions;
+﻿using Application.Abstractions;
+using Domain.Abstractions;
+using Infrastructure.Authentication;
 using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -27,6 +29,7 @@ namespace Infrastructure
             services.AddScoped<IRoleRepository, RoleRepository>();
             services.AddScoped<ITokenRepository, TokenRepository>();
             services.AddScoped<IOrderRepository, OrderRepository>();
+            services.AddScoped<IJwtProvider, JwtProvider>();
             return services;
         }
     }

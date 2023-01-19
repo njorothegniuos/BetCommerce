@@ -11,7 +11,7 @@ namespace Presentation.Controllers
     /// <summary>
     /// Represents the product controller.
     /// </summary>
-   // [Authorize(Policy = nameof(AuthPolicy.GlobalRights))]
+   // [Authorize]
     [Route("v{version:apiVersion}/product"), SwaggerOrder("B")]
     public class ProductController : ApiController
     {
