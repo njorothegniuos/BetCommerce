@@ -79,10 +79,11 @@
                 <h4 class="modal-title">
                     CART SUMMARY
                 </h4>
-                <p>
-                    Subtotal   KSh 1,950
+                <br /><br />
+                <p style="color:chocolate;">
+                    Subtotal   KSh <div id="total"></div>
                 </p>
-                <br/>
+                <br />
                 @Html.ActionLink("CHECKOUT", "CheckOut", "Dashboard", new { Area = "" }, new { @class = "btn btn-success" })
             </div>
         </div>
@@ -122,10 +123,12 @@
 
 }
 
+
     @section Scripts {
+
     <script src="~/Scripts/plugins/dataTables/datatables.min.js"></script>
     <script src="~/Scripts/plugins/sweetalert/sweetalert.min.js"></script>
-
+   
 
     <script type="text/javascript">
 
@@ -190,7 +193,7 @@
                     var viewUrl = '';
                     viewUrl = '<a class="btn btn-success btn-xs" data-toggle="modal" data-target="#myModal" onclick="ViewItem(\'' + aData.id + '\')" href="#">' + 'View</a>';
                     removeFromCart = '<a class="btn btn-danger btn-xs"  onclick="RemoveFromCart_1(' + aData.id + ')">' + 'Remove</a>';
-                    $('td:eq(3)', nRow).html(viewUrl + ' ' +removeFromCart);
+                    $('td:eq(3)', nRow).html(viewUrl);
 
                     return nRow;
                 },
@@ -198,7 +201,7 @@
                 "aoColumns": [
                     {
                         "mDataProp": "image", "render": function (mDataProp) {
-                            return '<img src="data:image/gif;base64 ' + mDataProp + '" class="avatar" width="50" height="50"/>';
+                            return '<img src="data:image/gif;base64, ' + mDataProp + '" class="avatar" width="50" height="50"/>';
                         }, "sTitle": "Image", "bSortable": false
                     },
                     { "mDataProp": "name", "sTitle": "Name", "bSortable": false },

@@ -1,34 +1,42 @@
 ﻿@using Core.Web.Extensions
 
 @{
-
 }
-<!-- ========== Left Sidebar Start ========== -->
-<div class="left side-menu">
-    <div class="slimScrollDiv">
-        <div class="sidebar-inner slimscrollleft">
-            <!--- Divider -->
-            <div id="sidebar-menu">
-                <input type="hidden" value="@User.Identity.Name" id="user_type_defination" />
-                <ul class="list-unstyled components">
-                    <li class="text-muted menu-title">Navigation Menus</li>
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul class="nav metismenu" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element">
+                    <span>
+                        <a href="/"><img alt="BET" style="width: 150px;" src="~/Content/images/BET_40x40.png" /></a>
+                    </span>
+                    <a data-toggle="" class="" href="#">
+                        <span class="clear">
+                            <span class="block m-t-xs">
+                                <strong class="font-bold">@Html.ActionLink((!string.IsNullOrWhiteSpace(User.Identity.Name) == true ? User.Identity.Name : User.Identity.Name + "!"), "userprofile", "account", routeValues: null, htmlAttributes: new { title = "User Profile" })</strong>
 
-                    <li class="@Html.IsSelected(controller: "Dashboard")">
-                        <a href="@Url.Action("Dashboard", "Dashboard", new { Area = "" })"><i class="fa fa-bar-dashboard"></i> <span class="nav-label" data-i18n="nav.metrics">Dashboard</span> </a>
-                    </li>
-                    <li>
+                            </span> <span class="text-muted text-xs block">
+                             <b class="caret"></b>
+                            </span>
+                        </span>
+                    </a>
+                </div>
+                <div class="logo-element">
+                    <img alt="BET" style="width: 20px;" src="~/Content/images/BET_40x40.png" />
+                </div>
+            </li>
 
-                        <a class="waves-effect" href="@Url.Action("Login", "Account", new {Area = ""})">
-                            <i class="fa fa-sign-out m-r-10 text-danger"></i><span> Logout</span>
-                        </a>
-                    </li>
+            <li class="@Html.IsSelected(controller: "Dashboard")">
+                <a href="@Url.Action("Dashboard", "Dashboard", new { Area = "" })"><i class="fa fa-bar-chart"></i> <span class="nav-label" data-i18n="nav.metrics">Dashboard</span> </a>
+            </li>
+           
+            <li>
 
-                </ul>
+                <a class="waves-effect" href="@Url.Action("Logout", "Account", new {Area = "Authentication"})">
+                    <i class="fa fa-sign-out m-r-10 text-danger"></i><span> Logout</span>
+                </a>
+            </li>
 
-                <div class="clearfix"></div>
-            </div>
-            <div class="clearfix"></div>
-        </div>
+        </ul>
     </div>
-    <!-- Sidebar -->
-</div>
+</nav>

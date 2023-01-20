@@ -24,7 +24,6 @@ namespace EmailService
             var message = new Message(new string[] { @object.To }, @object.Subject, @object.Content, null);
             await _emailSender.SendEmailAsync(message);
 
-
         }
 
     }

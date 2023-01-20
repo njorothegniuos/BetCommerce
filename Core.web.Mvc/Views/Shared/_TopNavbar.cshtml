@@ -1,41 +1,106 @@
 ﻿@using Core.Web.Extensions
 
-<div class="topbar">
-    <div class="topbar-left">
-        <div class="text-center">
-            <a href="#" class="logo">
-                <img alt="BET" src="~/Content/images/BET_40x40.png" style="position: relative; width: 92px;  height: 92px; top: 6px; left: 15px; left: 15px; background-size: contain;" class="img-responsive" id="appIcon" />
-                <span></span>
-            </a>
+<div class="row border-bottom">
+    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="navbar-header">
+           <div class="collapse navbar-collapse" id="rightNav">
+                            
+                        </div>
         </div>
-    </div>
-    <div class="navbar navbar-default" role="navigation" style="background-color:#22398d;">
-        <div class="container">
-            <div class="">
-                <div class="pull-left">
-                    <button class="button-menu-mobile open-left waves-effect waves-light">
-                        <i class="fa fa-navicon"></i>
-                    </button>
-                    <span class="clearfix"></span>
-                </div>
-                @if (User.Identity.IsAuthenticated)
-                {
-                    <ul class="nav navbar-nav hidden-xs">
-                        <li><a href="#" class="waves-effect waves-light">@DefaultSettings.Instance.ApplicationDisplayName | @ViewBag.Title</a></li>
-                    </ul>
-                }
-                <div class="navbar-header pull-right">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#rightNav">
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                </div>
-
-                <div class="collapse navbar-collapse" id="rightNav">
-                    <ul class="nav navbar-nav navbar-right pull-right">
-
-                        <li class="hidden-xs">
+        <ul class="nav navbar-top-links navbar-right">           
+            <li class="dropdown">              
+                <ul class="dropdown-menu dropdown-messages">
+                    <li>
+                        <div class="dropdown-messages-box">
+                            <a href="#" class="pull-left">
+                                <img alt="image" class="img-circle" src="~/Images/a7.jpg">
+                            </a>
+                            <div class="media-body">
+                                <small class="pull-right">46h ago</small>
+                                <strong>Mike Loreipsum</strong> started following <strong>Monica Smith</strong>. <br>
+                                <small class="text-muted">3 days ago at 7:58 pm - 10.06.2014</small>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <div class="dropdown-messages-box">
+                            <a href="#" class="pull-left">
+                                <img alt="image" class="img-circle" src="~/Images/a4.jpg">
+                            </a>
+                            <div class="media-body ">
+                                <small class="pull-right text-navy">5h ago</small>
+                                <strong>Chris Johnatan Overtunk</strong> started following <strong>Monica Smith</strong>. <br>
+                                <small class="text-muted">Yesterday 1:21 pm - 11.06.2014</small>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <div class="dropdown-messages-box">
+                            <a href="#" class="pull-left">
+                                <img alt="image" class="img-circle" src="~/Images/profile.jpg">
+                            </a>
+                            <div class="media-body ">
+                                <small class="pull-right">23h ago</small>
+                                <strong>Monica Smith</strong> love <strong>Kim Smith</strong>. <br>
+                                <small class="text-muted">2 days ago at 2:30 am - 11.06.2014</small>
+                            </div>
+                        </div>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <div class="text-center link-block">
+                            <a href="#">
+                                <i class="fa fa-envelope"></i> <strong>Read All Messages</strong>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            <li class="dropdown">                
+                <ul class="dropdown-menu dropdown-alerts">
+                    <li>
+                        <a href="#">
+                            <div>
+                                <i class="fa fa-envelope fa-fw"></i> You have 16 messages
+                                <span class="pull-right text-muted small">4 minutes ago</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#">
+                            <div>
+                                <i class="fa fa-twitter fa-fw"></i> 3 New Followers
+                                <span class="pull-right text-muted small">12 minutes ago</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <a href="#">
+                            <div>
+                                <i class="fa fa-upload fa-fw"></i> Server Rebooted
+                                <span class="pull-right text-muted small">4 minutes ago</span>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                        <div class="text-center link-block">
+                            <a href="#">
+                                <strong>See All Alerts</strong>
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        </div>
+                    </li>
+                </ul>
+            </li>
+            <li>
+                
+                        <ul class="nav navbar-top-links navbar-right">
+                           <li class="hidden-xs">
                             <a href="#" id="btn-fullscreen" class="waves-effect waves-light"><i class="glyphicon glyphicon-fullscreen"></i></a>
                         </li>
                         @if (User.Identity.IsAuthenticated)
@@ -44,7 +109,7 @@
                                 <a href="" class="dropdown-toggle profile waves-effect waves-light" data-toggle="dropdown" aria-expanded="false">
                                     <span id="current_user_id" style="display:none;">
                                         @{
-                                            var a =  User.Identity.Name; <strong class="font-bold"> @a</strong>
+                                            
                                         }
                                     </span>
                                     <i class="fa fa-user text-pink"></i>
@@ -68,13 +133,13 @@
                             </li>
                             <li>
                                 <a href="@Url.Action("Cart", "Dashboard", new {Area = ""})">
-                                    <i class="fa-shopping-cart text-success"></i> Cart
+                                <i class="fa fa-shopping-cart" aria-hidden="true"></i> Cart &nbsp; <label id="cartCount"></label>
                                 </a>
                             </li>
                         }
                         <li class="dropdown top-menu-item-xs">
                             <a href="javascript:void(0)" class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" aria-expanded="false">
-                                <i class="glyphicon glyphicon-question-sign"></i>
+                                <i  class="fa fa-question" aria-hidden="true"></i>
                                 <span>Help</span><span style="margin-left:7px;" class="caret"></span>
                             </a>
                         </li>
@@ -84,9 +149,13 @@
 
                             </a>
                         </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
+                        </ul>
+                 
+            </li>
+            
+        </ul>
+    </nav>
 </div>
+@section Scripts {
+<script src="~/js/cart.js"></script>
+}

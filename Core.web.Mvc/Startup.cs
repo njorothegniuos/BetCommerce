@@ -1,6 +1,9 @@
 using Core.web.Mvc.Identity;
+using Core.Web.Hubs;
+using Core.Web.MiddlewareExtensions;
 using Core.Web.Models;
 using Core.Web.Models.JQueryDataTables;
+using Core.Web.SubscribeTableDependencies;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.DataProtection;
@@ -8,6 +11,7 @@ using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption;
 using Microsoft.AspNetCore.DataProtection.AuthenticatedEncryption.ConfigurationModel;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Connections;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -105,6 +109,9 @@ namespace Core.web.Mvc
             services.AddControllersWithViews();
 
             services.AddRazorPages();
+            services.AddSignalR();
+            services.AddSingleton<CartHub>();
+            services.AddSingleton<SubscribeProductTableDependency>();
 
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddControllers(options =>
@@ -124,7 +131,11 @@ namespace Core.web.Mvc
             {
                 app.UseExceptionHandler("/Dashboard/Error");
             }
+            var configuration = new ConfigurationBuilder()
+             .AddJsonFile("appsettings.json")
+              .Build();
 
+            var connectionString = configuration.GetConnectionString("DefaultConnection");
             //Uncomment to seed user login data
             DataInitializerConfiguration.SeedData(userManager, roleManager);
 
@@ -139,7 +150,13 @@ namespace Core.web.Mvc
             app.UseAuthentication();
 
             app.UseAuthorization();
-
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHub<CartHub>("/cartHub", options =>
+                {
+                    options.Transports = HttpTransportType.WebSockets;
+                });
+            });
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -150,6 +167,7 @@ namespace Core.web.Mvc
                     name: "default",
                     pattern: "{controller=Dashboard}/{action=Dashboard}/{id?}");
             });
+            app.UseSqlTableDependency<SubscribeProductTableDependency>(connectionString);
         }
     }
 }

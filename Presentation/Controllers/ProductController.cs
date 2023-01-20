@@ -2,6 +2,7 @@
 using Application.Product.GetProductById;
 using Application.Product.Queries.GetProducts;
 using Mapster;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Swagger.Models.Attribute;
@@ -11,7 +12,7 @@ namespace Presentation.Controllers
     /// <summary>
     /// Represents the product controller.
     /// </summary>
-   // [Authorize]
+    [Authorize]
     [Route("v{version:apiVersion}/product"), SwaggerOrder("B")]
     public class ProductController : ApiController
     {

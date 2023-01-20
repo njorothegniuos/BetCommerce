@@ -41,13 +41,13 @@
                         <div class="sk-rect4"></div>
                         <div class="sk-rect5"></div>
                     </div>
-                    @if (TempData["Result"] != null)
+                    @if (TempData["Success"] != null)
                     {
                         <div class="alert alert-success fade in">
                             <button class="close" data-dismiss="alert">
                                 <i class="fa-fw fa fa-times"></i>
                             </button>
-                            @TempData["Result"]
+                            @TempData["Success"]
                         </div>
                     }
 
@@ -134,7 +134,7 @@
                 "aoColumns": [
                     {
                         "mDataProp": "image", "render": function (mDataProp) {
-                            return '<img src="data:image/gif;base64 ' + mDataProp + '" class="avatar" width="50" height="50"/>';
+                            return '<img src="data:image/gif;base64, ' + mDataProp + '" class="avatar" width="50" height="50"/>';
                         }, "sTitle": "Image", "bSortable": false
                     },
                     { "mDataProp": "name", "sTitle": "Name", "bSortable": false },

@@ -112,10 +112,11 @@
 
 }
 
+
 @section Scripts {
     <script src="~/Scripts/plugins/dataTables/datatables.min.js"></script>
     <script src="~/Scripts/plugins/sweetalert/sweetalert.min.js"></script>
-
+   
 
     <script type="text/javascript">
 
@@ -175,7 +176,7 @@
                 "aoColumns": [
                     {
                         "mDataProp": "image", "render": function (mDataProp) {
-                            return '<img src="data:image/gif;base64 ' + mDataProp + '" class="avatar" width="50" height="50"/>';
+                            return '<img src="data:image/png;base64, ' + mDataProp + '" class="avatar" width="50" height="50"/>';
                         }, "sTitle": "Image", "bSortable": false
                     },
                     { "mDataProp": "name", "sTitle": "Name", "bSortable": false },
